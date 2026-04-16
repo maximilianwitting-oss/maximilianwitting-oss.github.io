@@ -7,121 +7,272 @@
     <style>
         :root {
             --primary: #2563eb;
+            --primary-dark: #1d4ed8;
             --secondary: #1e40af;
             --bg: #f8fafc;
-            --text: #0f172a;
+            --text: #1e293b;
+            --text-light: #64748b;
             --card-bg: #ffffff;
+            --nav-bg: #ffffff;
         }
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
         body {
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
         }
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
+
+        /* Navbar with Submenu */
+        nav {
+            background-color: var(--nav-bg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        .container {
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
         }
-        .services {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .card {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
+        .logo {
             font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
         }
-        .contact {
-            margin-top: 4rem;
-            text-align: center;
-            padding: 3rem;
-            background-color: white;
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links li {
+            position: relative;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Dropdown Menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--card-bg);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            min-width: 200px;
+            padding: 0.5rem 0;
+            flex-direction: column;
+        }
+        .nav-links li:hover .dropdown-menu {
+            display: flex;
+        }
+        .dropdown-menu a {
+            padding: 0.75rem 1.5rem;
+            display: block;
+        }
+        .dropdown-menu a:hover {
+            background-color: var(--bg);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background-color: #000;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
         }
         .btn {
             display: inline-block;
             background-color: var(--primary);
             color: white;
-            padding: 0.8rem 2rem;
+            padding: 1rem 2.5rem;
             text-decoration: none;
-            border-radius: 4px;
-            margin-top: 1rem;
-            font-weight: bold;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s;
         }
         .btn:hover {
-            background-color: var(--secondary);
+            background-color: var(--primary-dark);
         }
+
+        /* Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: var(--text);
+        }
+
+        /* Services Grid */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .card-content {
+            padding: 2rem;
+        }
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        .card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            margin-top: 5rem;
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: var(--nav-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        .contact h2 {
+            margin-bottom: 1rem;
+        }
+
         footer {
             text-align: center;
             padding: 2rem;
+            background-color: var(--text);
+            color: #94a3b8;
             margin-top: 2rem;
-            color: #64748b;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Witting.info</h1>
-    <p>Professionelle IT-Dienstleistungen für Ihr Unternehmen</p>
+<nav>
+    <div class="nav-container">
+        <a href="#" class="logo">Witting.info</a>
+        <ul class="nav-links">
+            <li><a href="#">Startseite</a></li>
+            <li>
+                <a href="#services">Leistungen ▾</a>
+                <div class="dropdown-menu">
+                    <a href="#web">Webdesign & Pflege</a>
+                    <a href="#server">Server-Einrichtung</a>
+                    <a href="#office">Apple & Office Support</a>
+                </div>
+            </li>
+            <li><a href="#about">Über mich</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+        </ul>
+    </div>
+</nav>
+
+<header class="hero">
+    <img src="assets/hero.jpg" alt="IT Background" class="hero-bg">
+    <div class="hero-content">
+        <h1>Smarte IT. Einfach gemacht.</h1>
+        <p>Professioneller IT-Support, Apple-Expertise und modernes Webdesign für Selbstständige und kleine Unternehmen.</p>
+        <a href="#contact" class="btn">Projekt anfragen</a>
+    </div>
 </header>
 
-<div class="container">
+<div class="container" id="services">
+    <h2 class="section-title">Meine Leistungen</h2>
     <div class="services">
-        <div class="card">
-            <h3>🌐 Webseiten Erstellung</h3>
-            <p>Moderne, responsive Webseiten, die auf allen Geräten perfekt aussehen. Von der Idee bis zum Go-Live.</p>
+        <div class="card" id="web">
+            <img src="assets/web.jpg" alt="Webdesign" class="card-img">
+            <div class="card-content">
+                <h3>🌐 Webdesign & Pflege</h3>
+                <p>Moderne, responsive Webseiten, die auf allen Geräten perfekt aussehen. Inklusive Wartung, Backups und Sicherheits-Updates, damit du dich auf dein Business konzentrieren kannst.</p>
+            </div>
         </div>
-        <div class="card">
-            <h3>🛠️ Website Pflege</h3>
-            <p>Regelmäßige Updates, Backups und Sicherheitschecks, damit Ihre Seite immer reibungslos läuft.</p>
+        <div class="card" id="server">
+            <img src="assets/server.jpg" alt="Server Einrichtung" class="card-img">
+            <div class="card-content">
+                <h3>🖥️ Server & Cloud Setup</h3>
+                <p>Zuverlässige Serverkonfiguration und -verwaltung. Egal ob lokaler Mac-Server oder Cloud-Infrastruktur – ich baue dir ein System, das stabil und sicher läuft.</p>
+            </div>
         </div>
-        <div class="card">
-            <h3>🖥️ Server-Einrichtung</h3>
-            <p>Zuverlässige Serverkonfiguration und -verwaltung, zugeschnitten auf Ihre spezifischen Anforderungen.</p>
-        </div>
-        <div class="card">
-            <h3>💼 Office Support</h3>
-            <p>Schnelle Hilfe bei alltäglichen IT-Problemen im Büro. Wir halten Ihren Betrieb am Laufen.</p>
+        <div class="card" id="office">
+            <img src="assets/office.jpg" alt="Office Support" class="card-img">
+            <div class="card-content">
+                <h3>💼 Apple & Office Support</h3>
+                <p>Jahrelange Apple Genius Erfahrung direkt für dein Unternehmen. Schnelle Hilfe bei Mac-Problemen, MDM-Einrichtung und reibungslose Integration von Office 365.</p>
+            </div>
         </div>
     </div>
 
-    <div class="contact">
-        <h2>Bereit für den nächsten Schritt?</h2>
-        <p>Lassen Sie uns über Ihr nächstes IT-Projekt sprechen.</p>
-        <a href="mailto:kontakt@witting.info" class="btn">Kontakt aufnehmen</a>
+    <div class="contact" id="contact">
+        <h2>Bereit für IT, die einfach funktioniert?</h2>
+        <p style="color: var(--text-light); margin-bottom: 2rem;">Schreib mir eine Nachricht und wir schauen uns an, wie ich dein Setup optimieren kann.</p>
+        <a href="mailto:kontakt@witting.info" class="btn">kontakt@witting.info</a>
     </div>
 </div>
 
