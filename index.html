@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Witting.info - IT Dienstleistungen</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --bg: #f8fafc;
+            --text: #0f172a;
+            --card-bg: #ffffff;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .contact {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 3rem;
+            background-color: white;
+            border-radius: 8px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Witting.info</h1>
+    <p>Professionelle IT-Dienstleistungen für Ihr Unternehmen</p>
+</header>
+
+<div class="container">
+    <div class="services">
+        <div class="card">
+            <h3>🌐 Webseiten Erstellung</h3>
+            <p>Moderne, responsive Webseiten, die auf allen Geräten perfekt aussehen. Von der Idee bis zum Go-Live.</p>
+        </div>
+        <div class="card">
+            <h3>🛠️ Website Pflege</h3>
+            <p>Regelmäßige Updates, Backups und Sicherheitschecks, damit Ihre Seite immer reibungslos läuft.</p>
+        </div>
+        <div class="card">
+            <h3>🖥️ Server-Einrichtung</h3>
+            <p>Zuverlässige Serverkonfiguration und -verwaltung, zugeschnitten auf Ihre spezifischen Anforderungen.</p>
+        </div>
+        <div class="card">
+            <h3>💼 Office Support</h3>
+            <p>Schnelle Hilfe bei alltäglichen IT-Problemen im Büro. Wir halten Ihren Betrieb am Laufen.</p>
+        </div>
+    </div>
+
+    <div class="contact">
+        <h2>Bereit für den nächsten Schritt?</h2>
+        <p>Lassen Sie uns über Ihr nächstes IT-Projekt sprechen.</p>
+        <a href="mailto:kontakt@witting.info" class="btn">Kontakt aufnehmen</a>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Witting.info. Alle Rechte vorbehalten.</p>
+</footer>
+
+</body>
+</html>
