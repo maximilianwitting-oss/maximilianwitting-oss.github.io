@@ -7,7 +7,7 @@
 <meta name="description" content="Professionelle IT-Dienstleistungen: Webseiten, Server, Cloud & Support im Apple-Ökosystem.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
     :root {
         --bg: #fbfbfd;
@@ -21,10 +21,18 @@
         --accent-dark: #0369a1;
         --accent-soft: #e6f6fe;
         --accent2: #6366f1;
+        --accent3: #a855f7;
         --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
         --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.08);
         --shadow-lg: 0 24px 60px rgba(16, 24, 40, 0.12);
         --radius: 20px;
+        /* Farbkette der Sektionsübergänge */
+        --band-services-top: #eef6fd;
+        --band-services-bottom: #f1eefc;
+        --band-about-top: #f2effe;
+        --band-about-bottom: #edf5fd;
+        --band-dark-top: #0d1120;
+        --band-dark-bottom: #090b12;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,7 +49,20 @@
 
     img, svg { display: block; max-width: 100%; }
 
-    /* Ambient background blobs */
+    /* Scroll progress */
+    .scroll-progress {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+        transform-origin: left;
+        transform: scaleX(0);
+        z-index: 2000;
+        pointer-events: none;
+    }
+
+    /* Ambient background blobs (sichtbar in transparenten Bändern) */
     .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
     .ambient span {
         position: absolute;
@@ -65,7 +86,7 @@
     }
 
     header.scrolled {
-        background: rgba(251, 251, 253, 0.75);
+        background: rgba(251, 251, 253, 0.72);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         box-shadow: 0 1px 0 var(--border-soft), 0 8px 24px rgba(16,24,40,0.05);
@@ -181,11 +202,13 @@
         border: none;
     }
     .btn-primary {
-        background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+        background: linear-gradient(120deg, var(--accent), var(--accent2), var(--accent3), var(--accent2), var(--accent));
+        background-size: 300% 100%;
         color: white;
         box-shadow: 0 10px 30px rgba(14, 165, 233, 0.35);
+        animation: hueflow 9s ease-in-out infinite alternate;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(14, 165, 233, 0.45); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(99, 102, 241, 0.45); }
     .btn-secondary {
         background: var(--surface);
         color: var(--text);
@@ -193,15 +216,63 @@
     }
     .btn-secondary:hover { border-color: var(--text-tertiary); transform: translateY(-2px); }
 
-    /* Hero */
-    .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding: 140px 24px 80px;
-        max-width: 1200px;
-        margin: 0 auto;
+    /* Fließende Farbverläufe */
+    @keyframes hueflow {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
     }
+
+    /* Organisch morphende Blobs */
+    @keyframes blobMorph {
+        0%, 100% { border-radius: 58% 42% 38% 62% / 55% 45% 55% 45%; }
+        33% { border-radius: 40% 60% 62% 38% / 42% 58% 42% 58%; }
+        66% { border-radius: 62% 38% 44% 56% / 60% 40% 60% 40%; }
+    }
+
+    /* Bänder & Übergänge */
+    .band { position: relative; scroll-margin-top: 80px; }
+    .band .inner { max-width: 1200px; margin: 0 auto; padding: 110px 24px; }
+
+    .band-services { background: linear-gradient(180deg, var(--band-services-top), var(--band-services-bottom)); }
+    .band-about { background: linear-gradient(180deg, var(--band-about-top), var(--band-about-bottom)); }
+    .band-dark { background: linear-gradient(180deg, var(--band-dark-top), var(--band-dark-bottom)); }
+
+    .divider {
+        line-height: 0;
+        margin-top: -1px;
+        margin-bottom: -1px;
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
+    }
+    .divider svg { width: 100%; height: 130px; display: block; margin-bottom: -2px; position: relative; }
+
+    .eyebrow {
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--accent-dark);
+        background: var(--accent-soft);
+        padding: 6px 14px;
+        border-radius: 100px;
+        margin-bottom: 18px;
+    }
+
+    .section-header { max-width: 620px; margin-bottom: 56px; }
+    .section-header.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .section-header h2 {
+        font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 14px;
+    }
+    .section-header p { color: var(--text-secondary); font-size: 1.05rem; }
+
+    /* Hero */
+    .hero { min-height: 100vh; display: flex; align-items: center; }
+    .hero .inner { padding: 140px 24px 40px; width: 100%; }
     .hero-grid {
         display: grid;
         grid-template-columns: 1.05fr 0.95fr;
@@ -234,10 +305,12 @@
     }
     .hero h1 em {
         font-style: normal;
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent2), var(--accent));
+        background-size: 300% 100%;
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
+        animation: hueflow 7s ease-in-out infinite alternate;
     }
 
     .hero-subtitle {
@@ -256,6 +329,15 @@
 
     /* Hero visual: overlapping UI mockup */
     .hero-visual { position: relative; height: 460px; }
+
+    .hero-blob {
+        position: absolute;
+        inset: -20px 0 30px -20px;
+        background: linear-gradient(135deg, #bae6fd, #c7d2fe, #e9d5ff, #c7d2fe, #bae6fd);
+        background-size: 300% 300%;
+        animation: blobMorph 16s ease-in-out infinite, hueflow 12s ease-in-out infinite alternate;
+        opacity: 0.6;
+    }
 
     .mockup-main {
         position: absolute;
@@ -343,32 +425,6 @@
     @keyframes driftB { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(-1deg); } }
     @keyframes driftC { 0%,100% { transform: translateY(0) rotate(4deg); } 50% { transform: translateY(12px) rotate(2deg); } }
 
-    /* Section shared */
-    section { padding: 110px 24px; max-width: 1200px; margin: 0 auto; }
-
-    .eyebrow {
-        display: inline-block;
-        font-size: 0.8rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--accent-dark);
-        background: var(--accent-soft);
-        padding: 6px 14px;
-        border-radius: 100px;
-        margin-bottom: 18px;
-    }
-
-    .section-header { max-width: 620px; margin-bottom: 56px; }
-    .section-header.center { margin-left: auto; margin-right: auto; text-align: center; }
-    .section-header h2 {
-        font-size: clamp(1.9rem, 3.4vw, 2.6rem);
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        margin-bottom: 14px;
-    }
-    .section-header p { color: var(--text-secondary); font-size: 1.05rem; }
-
     /* Services bento grid */
     .services-grid {
         display: grid;
@@ -383,9 +439,25 @@
         padding: 32px;
         transition: all 0.4s cubic-bezier(.2,.8,.2,1);
         position: relative;
+        overflow: hidden;
     }
     .service-card.wide { grid-column: span 4; }
     .service-card.narrow { grid-column: span 2; }
+
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent2), var(--accent));
+        background-size: 300% 100%;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
+        animation: hueflow 6s linear infinite alternate;
+    }
+    .service-card:hover::before { transform: scaleX(1); }
 
     .service-card:hover {
         transform: translateY(-6px);
@@ -400,8 +472,15 @@
         color: var(--accent-dark);
         display: flex; align-items: center; justify-content: center;
         margin-bottom: 22px;
+        transition: all 0.4s cubic-bezier(.2,.8,.2,1);
     }
     .icon-tile svg { width: 24px; height: 24px; }
+    .service-card:hover .icon-tile {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: #fff;
+        transform: scale(1.06) rotate(-4deg);
+        border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+    }
 
     .service-card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.01em; }
     .service-card p { color: var(--text-secondary); font-size: 0.94rem; line-height: 1.65; }
@@ -412,8 +491,11 @@
         content: '';
         position: absolute;
         top: 23px; left: 60px; right: 60px;
-        height: 1px;
-        background: repeating-linear-gradient(90deg, var(--border) 0 8px, transparent 8px 16px);
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent2), var(--accent));
+        background-size: 300% 100%;
+        animation: hueflow 8s ease-in-out infinite alternate;
+        opacity: 0.25;
         z-index: 0;
     }
     .process-step { position: relative; z-index: 1; }
@@ -426,6 +508,14 @@
         font-weight: 700; color: var(--accent-dark);
         margin-bottom: 20px;
         box-shadow: var(--shadow-sm);
+        transition: all 0.4s cubic-bezier(.2,.8,.2,1);
+    }
+    .process-step:hover .num {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: #fff;
+        border-color: transparent;
+        border-radius: 42% 58% 55% 45% / 50% 42% 58% 50%;
+        transform: scale(1.08);
     }
     .process-step h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
     .process-step p { color: var(--text-secondary); font-size: 0.92rem; }
@@ -448,14 +538,23 @@
         background: var(--surface);
         border: 1px solid var(--border);
         color: var(--text);
+        transition: all 0.3s ease;
+    }
+    .skill-tag:hover {
+        border-color: var(--accent);
+        color: var(--accent-dark);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm);
     }
 
     .about-visual { position: relative; height: 380px; }
     .panel {
         position: absolute;
         inset: 0 20px 20px 0;
-        background: linear-gradient(150deg, var(--accent-soft), #eef2ff);
-        border-radius: 24px;
+        background: linear-gradient(150deg, #bae6fd, #c7d2fe, #ddd6fe, #c7d2fe, #bae6fd);
+        background-size: 300% 300%;
+        animation: blobMorph 14s ease-in-out infinite, hueflow 11s ease-in-out infinite alternate;
+        opacity: 0.75;
     }
     .stat-card {
         position: absolute;
@@ -471,42 +570,54 @@
     .stat-card .value { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
     .stat-card .value .pulse { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,0.18); }
 
-    /* Contact */
-    .contact-card {
-        background: linear-gradient(150deg, #0c0e14, #182035);
-        border-radius: 28px;
-        padding: 72px 40px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-    }
-    .contact-card::before {
-        content: '';
+    /* Contact (dunkles Band) */
+    .band-dark { color: #fff; overflow: hidden; }
+    .band-dark .glow {
         position: absolute;
-        width: 500px; height: 500px;
         border-radius: 50%;
+        filter: blur(80px);
+        pointer-events: none;
+    }
+    .band-dark .glow.g1 {
+        width: 560px; height: 560px;
+        top: 150px; right: -140px;
         background: radial-gradient(circle, rgba(14,165,233,0.35), transparent 70%);
-        top: -220px; right: -160px;
-        filter: blur(20px);
+        animation: driftA 12s ease-in-out infinite;
     }
-    .contact-card h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); font-weight: 700; color: #fff; margin-bottom: 14px; position: relative; }
-    .contact-card p { color: rgba(255,255,255,0.65); margin-bottom: 34px; font-size: 1.05rem; position: relative; }
-    .contact-card .btn-primary { position: relative; font-size: 1.05rem; padding: 18px 36px; }
+    .band-dark .glow.g2 {
+        width: 480px; height: 480px;
+        bottom: -220px; left: -120px;
+        background: radial-gradient(circle, rgba(168,85,247,0.28), transparent 70%);
+        animation: driftC 14s ease-in-out infinite;
+    }
+    .band-dark .inner { padding: 120px 24px 80px; text-align: center; position: relative; }
+    .band-dark .eyebrow { background: rgba(125,211,252,0.14); color: #7dd3fc; }
+    .band-dark h2 {
+        font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 14px;
+    }
+    .band-dark .contact-sub { color: rgba(255,255,255,0.62); margin-bottom: 34px; font-size: 1.05rem; }
+    .band-dark .btn-primary { font-size: 1.05rem; padding: 18px 36px; }
 
-    /* Footer */
+    /* Footer im dunklen Band */
     footer {
-        padding: 48px 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 24px 48px;
         text-align: center;
-        color: var(--text-tertiary);
+        color: rgba(255,255,255,0.45);
         font-size: 0.88rem;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        position: relative;
     }
-    footer .foot-logo { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px; font-weight: 700; color: var(--text); }
-    footer a { color: var(--accent-dark); text-decoration: none; }
+    footer .foot-logo { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px; font-weight: 700; color: #fff; }
+    footer a { color: #7dd3fc; text-decoration: none; }
 
     /* Fade-in on scroll */
     .fade-in { opacity: 0; transform: translateY(28px); transition: all 0.8s cubic-bezier(.2,.8,.2,1); }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
-    .stagger.visible > * { animation: none; }
 
     /* Responsive */
     @media (max-width: 980px) {
@@ -516,6 +627,7 @@
         .about-visual { height: 300px; order: -1; }
         .process { grid-template-columns: 1fr; gap: 40px; }
         .process::before { display: none; }
+        .divider svg { height: 90px; }
     }
 
     @media (max-width: 760px) {
@@ -525,14 +637,25 @@
         .nav-logo { justify-self: start; }
         .services-grid { grid-template-columns: 1fr; }
         .service-card, .service-card.wide, .service-card.narrow { grid-column: span 1; }
-        section { padding: 80px 20px; }
-        .hero { padding: 120px 20px 60px; }
-        .contact-card { padding: 48px 24px; }
+        .band .inner { padding: 80px 20px; }
+        .hero .inner { padding: 120px 20px 40px; }
+        .band-dark .inner { padding: 90px 20px 60px; }
+        .divider svg { height: 60px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+        html { scroll-behavior: auto; }
     }
 </style>
 </head>
 <body>
-    <div class="ambient"><span></span><span></span><span></span></div>
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="ambient" id="ambient"><span></span><span></span><span></span></div>
 
     <header id="siteHeader">
         <nav>
@@ -573,198 +696,308 @@
     </header>
 
     <!-- Hero -->
-    <section class="hero" id="home">
-        <div class="hero-grid">
-            <div class="hero-copy fade-in visible">
-                <div class="hero-badge"><span class="dot"></span> IT-Lösungen für Ihr Unternehmen</div>
-                <h1>IT, die einfach <em>funktioniert</em>.</h1>
-                <p class="hero-subtitle">
-                    Professionelle IT-Dienstleistungen mit jahrelanger Erfahrung im Apple-Ökosystem.
-                    Webseiten, Server &amp; Support – alles aus einer Hand.
-                </p>
-                <div class="hero-cta">
-                    <a href="#contact" class="btn btn-primary">Kontakt aufnehmen</a>
-                    <a href="#services" class="btn btn-secondary">Leistungen ansehen</a>
-                </div>
-                <div class="hero-trust">
-                    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Persönlicher Ansprechpartner</div>
-                    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Remote &amp; vor Ort</div>
-                    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Apple-Expertise</div>
-                </div>
-            </div>
-
-            <div class="hero-visual fade-in visible">
-                <div class="mockup-main">
-                    <div class="mockup-topbar">
-                        <i></i><i></i><i></i>
-                        <span class="url">witting.info</span>
+    <section class="band hero" id="home">
+        <div class="inner">
+            <div class="hero-grid">
+                <div class="hero-copy fade-in visible">
+                    <div class="hero-badge"><span class="dot"></span> IT-Lösungen für Ihr Unternehmen</div>
+                    <h1>IT, die einfach <em>funktioniert</em>.</h1>
+                    <p class="hero-subtitle">
+                        Professionelle IT-Dienstleistungen mit jahrelanger Erfahrung im Apple-Ökosystem.
+                        Webseiten, Server &amp; Support – alles aus einer Hand.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#contact" class="btn btn-primary">Kontakt aufnehmen</a>
+                        <a href="#services" class="btn btn-secondary">Leistungen ansehen</a>
                     </div>
-                    <div class="mockup-body">
-                        <div class="mockup-line w60"></div>
-                        <div class="mockup-line w90"></div>
-                        <div class="mockup-line w70"></div>
-                        <div class="mockup-chart">
-                            <b style="height:40%"></b>
-                            <b style="height:65%"></b>
-                            <b style="height:50%"></b>
-                            <b style="height:85%"></b>
-                            <b style="height:60%"></b>
-                            <b style="height:95%"></b>
+                    <div class="hero-trust">
+                        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Persönlicher Ansprechpartner</div>
+                        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Remote &amp; vor Ort</div>
+                        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Apple-Expertise</div>
+                    </div>
+                </div>
+
+                <div class="hero-visual fade-in visible">
+                    <div class="hero-blob"></div>
+                    <div class="mockup-main">
+                        <div class="mockup-topbar">
+                            <i></i><i></i><i></i>
+                            <span class="url">witting.info</span>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="mockup-line w60"></div>
+                            <div class="mockup-line w90"></div>
+                            <div class="mockup-line w70"></div>
+                            <div class="mockup-chart">
+                                <b style="height:40%"></b>
+                                <b style="height:65%"></b>
+                                <b style="height:50%"></b>
+                                <b style="height:85%"></b>
+                                <b style="height:60%"></b>
+                                <b style="height:95%"></b>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="float-card float-1">
-                    <div class="icon-badge">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                    <div class="float-card float-1">
+                        <div class="icon-badge">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        <div><strong>Server online</strong><span>Uptime 99.9%</span></div>
                     </div>
-                    <div><strong>Server online</strong><span>Uptime 99.9%</span></div>
-                </div>
-                <div class="float-card float-2">
-                    <div class="icon-badge">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                    <div class="float-card float-2">
+                        <div class="icon-badge">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                        </div>
+                        <div><strong>Backup aktiv</strong><span>Täglich gesichert</span></div>
                     </div>
-                    <div><strong>Backup aktiv</strong><span>Täglich gesichert</span></div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Übergang: Hero → Leistungen -->
+    <div class="divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="var(--band-services-top, #eef6fd)" fill-opacity="0.45">
+                <animate attributeName="d" dur="20s" repeatCount="indefinite"
+                    calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                    values="M0,86 C240,128 480,24 720,64 C960,104 1200,30 1440,88 L1440,130 L0,130 Z;
+                            M0,58 C240,18 480,116 720,70 C960,24 1200,112 1440,54 L1440,130 L0,130 Z;
+                            M0,86 C240,128 480,24 720,64 C960,104 1200,30 1440,88 L1440,130 L0,130 Z"/>
+            </path>
+            <path fill="#eef6fd">
+                <animate attributeName="d" dur="14s" repeatCount="indefinite"
+                    calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                    values="M0,98 C260,52 500,122 720,88 C940,54 1180,110 1440,66 L1440,130 L0,130 Z;
+                            M0,70 C260,116 500,36 720,74 C940,112 1180,42 1440,94 L1440,130 L0,130 Z;
+                            M0,98 C260,52 500,122 720,88 C940,54 1180,110 1440,66 L1440,130 L0,130 Z"/>
+            </path>
+        </svg>
+    </div>
 
     <!-- Services -->
-    <section id="services">
-        <div class="section-header center fade-in">
-            <span class="eyebrow">Leistungen</span>
-            <h2>Alles, was Ihr Unternehmen digital braucht</h2>
-            <p>Von der ersten Idee bis zum laufenden Betrieb – ein Ansprechpartner für Ihre gesamte IT.</p>
-        </div>
-        <div class="services-grid">
-            <div class="service-card wide fade-in">
-                <div class="icon-tile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/></svg>
-                </div>
-                <h3>Webseiten Erstellung</h3>
-                <p>Moderne, responsive Webseiten, die auf allen Geräten perfekt aussehen. Von der Idee bis zum Go-Live – professionell und bezahlbar.</p>
+    <section class="band band-services" id="services">
+        <div class="inner">
+            <div class="section-header center fade-in">
+                <span class="eyebrow">Leistungen</span>
+                <h2>Alles, was Ihr Unternehmen digital braucht</h2>
+                <p>Von der ersten Idee bis zum laufenden Betrieb – ein Ansprechpartner für Ihre gesamte IT.</p>
             </div>
-            <div class="service-card narrow fade-in">
-                <div class="icon-tile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3"/><path d="M18 4v4h-4M6 20v-4h4"/></svg>
+            <div class="services-grid">
+                <div class="service-card wide fade-in">
+                    <div class="icon-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/></svg>
+                    </div>
+                    <h3>Webseiten Erstellung</h3>
+                    <p>Moderne, responsive Webseiten, die auf allen Geräten perfekt aussehen. Von der Idee bis zum Go-Live – professionell und bezahlbar.</p>
                 </div>
-                <h3>Website Pflege</h3>
-                <p>Regelmäßige Updates, Backups und Sicherheitschecks für einen reibungslosen Betrieb.</p>
-            </div>
-            <div class="service-card narrow fade-in">
-                <div class="icon-tile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="6" rx="2"/><rect x="4" y="14" width="16" height="6" rx="2"/><circle cx="8" cy="7" r="0.6" fill="currentColor"/><circle cx="8" cy="17" r="0.6" fill="currentColor"/></svg>
+                <div class="service-card narrow fade-in">
+                    <div class="icon-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3"/><path d="M18 4v4h-4M6 20v-4h4"/></svg>
+                    </div>
+                    <h3>Website Pflege</h3>
+                    <p>Regelmäßige Updates, Backups und Sicherheitschecks für einen reibungslosen Betrieb.</p>
                 </div>
-                <h3>Server-Einrichtung</h3>
-                <p>Zuverlässige Serverkonfiguration und -verwaltung für Mac &amp; Windows.</p>
-            </div>
-            <div class="service-card wide fade-in">
-                <div class="icon-tile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M3 13h18"/></svg>
+                <div class="service-card narrow fade-in">
+                    <div class="icon-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="6" rx="2"/><rect x="4" y="14" width="16" height="6" rx="2"/><circle cx="8" cy="7" r="0.6" fill="currentColor"/><circle cx="8" cy="17" r="0.6" fill="currentColor"/></svg>
+                    </div>
+                    <h3>Server-Einrichtung</h3>
+                    <p>Zuverlässige Serverkonfiguration und -verwaltung für Mac &amp; Windows.</p>
                 </div>
-                <h3>Office Support</h3>
-                <p>Schnelle Hilfe bei alltäglichen IT-Problemen im Büro. Wir halten Ihren Betrieb am Laufen – remote oder vor Ort.</p>
-            </div>
-            <div class="service-card wide fade-in">
-                <div class="icon-tile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="14" height="10" rx="2"/><path d="M7 19h6"/><path d="M10 15v4"/></svg>
+                <div class="service-card wide fade-in">
+                    <div class="icon-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2"/><path d="M3 13h18"/></svg>
+                    </div>
+                    <h3>Office Support</h3>
+                    <p>Schnelle Hilfe bei alltäglichen IT-Problemen im Büro. Wir halten Ihren Betrieb am Laufen – remote oder vor Ort.</p>
                 </div>
-                <h3>Apple Ecosystem</h3>
-                <p>Umfassende und jahrelange Erfahrung im Apple-Ökosystem direkt für Ihr Unternehmen. Mac, iPhone, iPad – alles vernetzt.</p>
-            </div>
-            <div class="service-card narrow fade-in">
-                <div class="icon-tile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/></svg>
+                <div class="service-card wide fade-in">
+                    <div class="icon-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="14" height="10" rx="2"/><path d="M7 19h6"/><path d="M10 15v4"/></svg>
+                    </div>
+                    <h3>Apple Ecosystem</h3>
+                    <p>Umfassende und jahrelange Erfahrung im Apple-Ökosystem direkt für Ihr Unternehmen. Mac, iPhone, iPad – alles vernetzt.</p>
                 </div>
-                <h3>Cloud &amp; Backup</h3>
-                <p>Sichere Cloud-Lösungen und Backup-Strategien für Ihre Daten.</p>
+                <div class="service-card narrow fade-in">
+                    <div class="icon-tile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 18a4 4 0 01-1-7.9 5 5 0 019.6-1.9A4.5 4.5 0 0118 18H7z"/></svg>
+                    </div>
+                    <h3>Cloud &amp; Backup</h3>
+                    <p>Sichere Cloud-Lösungen und Backup-Strategien für Ihre Daten.</p>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Übergang: Leistungen → Ablauf -->
+    <div class="divider" style="background: var(--band-services-bottom);" aria-hidden="true">
+        <svg viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#fbfbfd" fill-opacity="0.45">
+                <animate attributeName="d" dur="22s" repeatCount="indefinite"
+                    calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                    values="M0,80 C280,120 520,28 760,68 C1000,108 1220,36 1440,80 L1440,130 L0,130 Z;
+                            M0,62 C280,22 520,112 760,66 C1000,20 1220,104 1440,58 L1440,130 L0,130 Z;
+                            M0,80 C280,120 520,28 760,68 C1000,108 1220,36 1440,80 L1440,130 L0,130 Z"/>
+            </path>
+            <path fill="#fbfbfd">
+                <animate attributeName="d" dur="16s" repeatCount="indefinite"
+                    calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                    values="M0,92 C240,60 520,118 780,82 C1040,46 1240,104 1440,72 L1440,130 L0,130 Z;
+                            M0,68 C240,110 520,40 780,76 C1040,112 1240,48 1440,90 L1440,130 L0,130 Z;
+                            M0,92 C240,60 520,118 780,82 C1040,46 1240,104 1440,72 L1440,130 L0,130 Z"/>
+            </path>
+        </svg>
+    </div>
 
     <!-- Process -->
-    <section id="process">
-        <div class="section-header center fade-in">
-            <span class="eyebrow">Ablauf</span>
-            <h2>So läuft die Zusammenarbeit ab</h2>
-            <p>Unkompliziert, transparent und auf Ihr Unternehmen zugeschnitten.</p>
-        </div>
-        <div class="process">
-            <div class="process-step fade-in">
-                <div class="num">1</div>
-                <h3>Beratung &amp; Analyse</h3>
-                <p>Wir besprechen Ihre Anforderungen und finden gemeinsam die passende Lösung.</p>
+    <section class="band" id="process">
+        <div class="inner">
+            <div class="section-header center fade-in">
+                <span class="eyebrow">Ablauf</span>
+                <h2>So läuft die Zusammenarbeit ab</h2>
+                <p>Unkompliziert, transparent und auf Ihr Unternehmen zugeschnitten.</p>
             </div>
-            <div class="process-step fade-in">
-                <div class="num">2</div>
-                <h3>Umsetzung</h3>
-                <p>Ich setze die Lösung sauber und zuverlässig um – remote oder direkt vor Ort.</p>
-            </div>
-            <div class="process-step fade-in">
-                <div class="num">3</div>
-                <h3>Support &amp; Pflege</h3>
-                <p>Auch nach dem Go-Live bleibe ich Ihr Ansprechpartner für Wartung und Fragen.</p>
+            <div class="process">
+                <div class="process-step fade-in">
+                    <div class="num">1</div>
+                    <h3>Beratung &amp; Analyse</h3>
+                    <p>Wir besprechen Ihre Anforderungen und finden gemeinsam die passende Lösung.</p>
+                </div>
+                <div class="process-step fade-in">
+                    <div class="num">2</div>
+                    <h3>Umsetzung</h3>
+                    <p>Ich setze die Lösung sauber und zuverlässig um – remote oder direkt vor Ort.</p>
+                </div>
+                <div class="process-step fade-in">
+                    <div class="num">3</div>
+                    <h3>Support &amp; Pflege</h3>
+                    <p>Auch nach dem Go-Live bleibe ich Ihr Ansprechpartner für Wartung und Fragen.</p>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Übergang: Ablauf → Über mich -->
+    <div class="divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="var(--band-about-top, #f2effe)" fill-opacity="0.45">
+                <animate attributeName="d" dur="24s" repeatCount="indefinite"
+                    calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                    values="M0,84 C300,124 540,26 780,62 C1020,98 1240,34 1440,86 L1440,130 L0,130 Z;
+                            M0,56 C300,20 540,110 780,68 C1020,26 1240,108 1440,52 L1440,130 L0,130 Z;
+                            M0,84 C300,124 540,26 780,62 C1020,98 1240,34 1440,86 L1440,130 L0,130 Z"/>
+            </path>
+            <path fill="#f2effe">
+                <animate attributeName="d" dur="15s" repeatCount="indefinite"
+                    calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                    values="M0,96 C260,56 520,120 760,86 C1000,52 1220,108 1440,68 L1440,130 L0,130 Z;
+                            M0,66 C260,112 520,38 760,72 C1000,106 1220,44 1440,92 L1440,130 L0,130 Z;
+                            M0,96 C260,56 520,120 760,86 C1000,52 1220,108 1440,68 L1440,130 L0,130 Z"/>
+            </path>
+        </svg>
+    </div>
 
     <!-- About -->
-    <section id="about">
-        <div class="about-grid">
-            <div class="about-copy fade-in">
-                <span class="eyebrow">Über mich</span>
-                <h2 style="font-size:clamp(1.9rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:20px;">IT mit Leidenschaft und Erfahrung</h2>
-                <p>IT-Enthusiast mit jahrelanger Erfahrung im technischen Support. Ich verbinde professionelles Know-how mit praktischer Lösungsorientierung – für Sie und Ihr Unternehmen.</p>
-                <p>Ob Webentwicklung, Server-Infrastruktur oder täglicher IT-Support: Ich stehe Ihnen mit Rat und Tat zur Seite.</p>
-                <div class="skills">
-                    <span class="skill-tag">Apple</span>
-                    <span class="skill-tag">macOS Server</span>
-                    <span class="skill-tag">Web Development</span>
-                    <span class="skill-tag">Cloud Solutions</span>
-                    <span class="skill-tag">IT Security</span>
-                    <span class="skill-tag">Mobile Device Management</span>
+    <section class="band band-about" id="about">
+        <div class="inner">
+            <div class="about-grid">
+                <div class="about-copy fade-in">
+                    <span class="eyebrow">Über mich</span>
+                    <h2 style="font-size:clamp(1.9rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:20px;">IT mit Leidenschaft und Erfahrung</h2>
+                    <p>IT-Enthusiast mit jahrelanger Erfahrung im technischen Support. Ich verbinde professionelles Know-how mit praktischer Lösungsorientierung – für Sie und Ihr Unternehmen.</p>
+                    <p>Ob Webentwicklung, Server-Infrastruktur oder täglicher IT-Support: Ich stehe Ihnen mit Rat und Tat zur Seite.</p>
+                    <div class="skills">
+                        <span class="skill-tag">Apple</span>
+                        <span class="skill-tag">macOS Server</span>
+                        <span class="skill-tag">Web Development</span>
+                        <span class="skill-tag">Cloud Solutions</span>
+                        <span class="skill-tag">IT Security</span>
+                        <span class="skill-tag">Mobile Device Management</span>
+                    </div>
                 </div>
-            </div>
-            <div class="about-visual fade-in">
-                <div class="panel"></div>
-                <div class="stat-card s1">
-                    <div class="label">Fokus</div>
-                    <div class="value">Apple-Ökosystem</div>
-                </div>
-                <div class="stat-card s2">
-                    <div class="label">Erreichbarkeit</div>
-                    <div class="value"><span class="pulse"></span> Persönlich &amp; direkt</div>
+                <div class="about-visual fade-in">
+                    <div class="panel"></div>
+                    <div class="stat-card s1">
+                        <div class="label">Fokus</div>
+                        <div class="value">Apple-Ökosystem</div>
+                    </div>
+                    <div class="stat-card s2">
+                        <div class="label">Erreichbarkeit</div>
+                        <div class="value"><span class="pulse"></span> Persönlich &amp; direkt</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact">
-        <div class="contact-card fade-in">
-            <h2>Bereit für den nächsten Schritt?</h2>
-            <p>Lassen Sie uns über Ihr IT-Projekt sprechen.</p>
-            <a href="mailto:kontakt@witting.info" class="btn btn-primary">✉ kontakt@witting.info</a>
-        </div>
-    </section>
+    <!-- Übergang: Über mich → Kontakt (hell → dunkel) -->
+    <div class="divider" style="background: var(--band-about-bottom);" aria-hidden="true">
+        <svg viewBox="0 0 1440 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="var(--band-dark-top, #0d1120)" fill-opacity="0.4">
+                <animate attributeName="d" dur="26s" repeatCount="indefinite"
+                    calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                    values="M0,88 C260,126 500,30 740,64 C980,98 1220,32 1440,84 L1440,130 L0,130 Z;
+                            M0,54 C260,16 500,112 740,70 C980,28 1220,110 1440,58 L1440,130 L0,130 Z;
+                            M0,88 C260,126 500,30 740,64 C980,98 1220,32 1440,84 L1440,130 L0,130 Z"/>
+            </path>
+            <path fill="#0d1120">
+                <animate attributeName="d" dur="17s" repeatCount="indefinite"
+                    calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                    values="M0,100 C280,58 540,120 800,84 C1060,48 1260,104 1440,70 L1440,130 L0,130 Z;
+                            M0,72 C280,114 540,42 800,78 C1060,114 1260,46 1440,96 L1440,130 L0,130 Z;
+                            M0,100 C280,58 540,120 800,84 C1060,48 1260,104 1440,70 L1440,130 L0,130 Z"/>
+            </path>
+        </svg>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="foot-logo">
-            <svg width="20" height="14" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 26 L14 6 L24 22 L34 6 L44 26" stroke="url(#logoGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            witting.info
+    <!-- Contact + Footer im dunklen Band -->
+    <section class="band band-dark" id="contact">
+        <span class="glow g1" aria-hidden="true"></span>
+        <span class="glow g2" aria-hidden="true"></span>
+        <div class="inner">
+            <span class="eyebrow">Kontakt</span>
+            <h2 class="fade-in">Bereit für den nächsten Schritt?</h2>
+            <p class="contact-sub fade-in">Lassen Sie uns über Ihr IT-Projekt sprechen.</p>
+            <a href="mailto:kontakt@witting.info" class="btn btn-primary fade-in">✉ kontakt@witting.info</a>
         </div>
-        <p>© 2026 <a href="https://witting.info">witting.info</a> — IT-Dienstleistungen mit Leidenschaft</p>
-    </footer>
+        <footer>
+            <div class="foot-logo">
+                <svg width="20" height="14" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 26 L14 6 L24 22 L34 6 L44 26" stroke="url(#logoGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                witting.info
+            </div>
+            <p>© 2026 <a href="https://witting.info">witting.info</a> — IT-Dienstleistungen mit Leidenschaft</p>
+        </footer>
+    </section>
 
     <script>
         // Header scroll state
         const header = document.getElementById('siteHeader');
+        const progress = document.getElementById('scrollProgress');
+        const ambient = document.getElementById('ambient');
+        let ticking = false;
+
+        function onScroll() {
+            const y = window.scrollY;
+            header.classList.toggle('scrolled', y > 20);
+
+            // Scroll progress bar + sanfte Farbrotation der Hintergrund-Blobs
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            const p = max > 0 ? Math.min(y / max, 1) : 0;
+            progress.style.transform = `scaleX(${p})`;
+            ambient.style.filter = `hue-rotate(${p * 70}deg)`;
+            ticking = false;
+        }
+
         window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 20);
-        });
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(onScroll);
+            }
+        }, { passive: true });
+        onScroll();
 
         // Mobile menu
         const navToggle = document.getElementById('navToggle');
@@ -799,6 +1032,11 @@
                 }
             });
         });
+
+        // Reduzierte Bewegung: SVG-Wellenanimationen stoppen
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('animate').forEach(el => el.remove());
+        }
     </script>
 </body>
 </html>
