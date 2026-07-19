@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support – SABnzbd Client</title>
+<meta name="description" content="Support und Hilfe für die App SABnzbd Client. Kontakt, FAQ und häufige Fragen zur Verbindung mit deinem SABnzbd-Server.">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #fbfbfd;
+        --surface: #ffffff;
+        --text: #0c0e14;
+        --text-secondary: #666c78;
+        --text-tertiary: #99a0ab;
+        --border: rgba(12, 14, 20, 0.08);
+        --border-soft: rgba(12, 14, 20, 0.05);
+        --accent: #0ea5e9;
+        --accent-dark: #0369a1;
+        --accent-soft: #e6f6fe;
+        --accent2: #6366f1;
+        --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
+        --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.08);
+        --radius: 20px;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #090b12;
+            --surface: #12151f;
+            --text: #f4f6fb;
+            --text-secondary: #a8b0bd;
+            --text-tertiary: #6b7280;
+            --border: rgba(255, 255, 255, 0.10);
+            --border-soft: rgba(255, 255, 255, 0.06);
+            --accent-soft: rgba(14, 165, 233, 0.12);
+        }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+    }
+    .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .ambient span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.30; }
+    .ambient span:nth-child(1) { width: 480px; height: 480px; top: -180px; left: -140px; background: radial-gradient(circle, #7dd3fc, transparent 70%); }
+    .ambient span:nth-child(2) { width: 420px; height: 420px; top: 30%; right: -180px; background: radial-gradient(circle, #a5b4fc, transparent 70%); }
+
+    .wrap { max-width: 780px; margin: 0 auto; padding: 48px 24px 96px; }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); font-weight: 700; }
+    .brand .dot { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow: var(--shadow-md); }
+    .brand small { display: block; font-weight: 500; font-size: 0.78rem; color: var(--text-secondary); }
+
+    .lang { display: inline-flex; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 4px; box-shadow: var(--shadow-sm); }
+    .lang button { border: 0; background: transparent; color: var(--text-secondary); font: inherit; font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 100px; cursor: pointer; transition: all .2s ease; }
+    .lang button.active { background: var(--accent); color: #fff; box-shadow: var(--shadow-sm); }
+
+    .eyebrow { display: inline-block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dark); background: var(--accent-soft); padding: 6px 14px; border-radius: 100px; margin-bottom: 16px; }
+    h1 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 10px; }
+    .lead { color: var(--text-secondary); font-size: 1.08rem; margin-bottom: 32px; }
+
+    .contact { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 44px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 0.98rem; padding: 13px 22px; border-radius: 100px; transition: transform .2s ease, box-shadow .2s ease; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: var(--shadow-md); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+    .btn-secondary:hover { transform: translateY(-2px); }
+
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 44px; }
+    .meta div { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow-sm); }
+    .meta span { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); margin-bottom: 4px; }
+    .meta b { font-size: 1.02rem; font-weight: 600; }
+
+    h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 18px; }
+
+    details { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm); overflow: hidden; }
+    summary { cursor: pointer; list-style: none; padding: 18px 20px; font-weight: 600; font-size: 1.02rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--accent-dark); font-size: 1.4rem; font-weight: 400; line-height: 1; transition: transform .2s ease; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details .body { padding: 0 20px 18px; color: var(--text-secondary); }
+    details .body p { margin-bottom: 10px; }
+    details .body ul { padding-left: 20px; }
+    details .body li { margin-bottom: 6px; }
+    code { background: var(--accent-soft); color: var(--accent-dark); padding: 1px 6px; border-radius: 6px; font-size: 0.9em; }
+    a { color: var(--accent-dark); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+
+    footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border-soft); color: var(--text-tertiary); font-size: 0.88rem; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+    footer a { color: var(--text-secondary); }
+
+    [data-lang] { display: none; }
+    html[data-active="de"] [data-lang="de"] { display: revert; }
+    html[data-active="en"] [data-lang="en"] { display: revert; }
+</style>
+</head>
+<body>
+<div class="ambient"><span></span><span></span></div>
+<div class="wrap">
+    <div class="topbar">
+        <a class="brand" href="https://witting.info">
+            <span class="dot"></span>
+            <span>SABnzbd Client<small>by witting.info</small></span>
+        </a>
+        <div class="lang" role="group" aria-label="Sprache / Language">
+            <button type="button" data-set="de" class="active">DE</button>
+            <button type="button" data-set="en">EN</button>
+        </div>
+    </div>
+
+    <!-- ==================== DEUTSCH ==================== -->
+    <div data-lang="de">
+        <span class="eyebrow">Support</span>
+        <h1>Wie können wir helfen?</h1>
+        <p class="lead">Fragen, Fehler oder Wünsche zu <strong>SABnzbd Client</strong>? Schreib uns – wir antworten so schnell wie möglich.</p>
+
+        <div class="contact">
+            <a class="btn btn-primary" href="mailto:kontakt@witting.info?subject=SABnzbd%20Client%20Support">✉ E-Mail an den Support</a>
+            <a class="btn btn-secondary" href="/sabnzbd/datenschutz">Datenschutz</a>
+        </div>
+
+        <div class="meta">
+            <div><span>App</span><b>SABnzbd Client</b></div>
+            <div><span>Version</span><b>1.0</b></div>
+            <div><span>System</span><b>iOS 26 oder neuer</b></div>
+            <div><span>Antwortzeit</span><b>i. d. R. 1–2 Tage</b></div>
+        </div>
+
+        <h2>Häufige Fragen</h2>
+
+        <details>
+            <summary>Die App verbindet sich nicht mit meinem Server</summary>
+            <div class="body">
+                <p>Prüfe folgende Punkte:</p>
+                <ul>
+                    <li>Sind <b>Adresse (Host)</b> und <b>Port</b> korrekt? Standard-Port ist oft <code>8080</code>.</li>
+                    <li>Ist der <b>API-Schlüssel</b> richtig? Du findest ihn in SABnzbd unter <em>Einstellungen → Allgemein → API Key</em>.</li>
+                    <li>Bei aktivem <b>SSL/HTTPS</b> muss der Schalter in der App ebenfalls aktiviert sein.</li>
+                    <li>Befinden sich iPhone und Server im <b>selben Netzwerk</b>? Von unterwegs brauchst du eine erreichbare Adresse (z. B. VPN oder Portfreigabe).</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>Wo finde ich meinen API-Schlüssel?</summary>
+            <div class="body">
+                <p>In der SABnzbd-Weboberfläche unter <em>Einstellungen → Allgemein</em>. Dort gibt es das Feld <b>API Key</b>. Kopiere diesen Wert und füge ihn beim Einrichten des Servers in der App ein.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Werden meine Daten irgendwo gespeichert?</summary>
+            <div class="body">
+                <p>Nein. Serveradressen und Einstellungen bleiben lokal auf deinem Gerät, der API-Schlüssel liegt sicher im iOS-Schlüsselbund. Es gibt kein Tracking und keine Cloud. Details in der <a href="/sabnzbd/datenschutz">Datenschutzerklärung</a>.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Kann ich mehrere Server verwalten?</summary>
+            <div class="body">
+                <p>Ja. In den Einstellungen kannst du beliebig viele SABnzbd-Server hinzufügen, bearbeiten und zwischen ihnen wechseln.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Die Siri-Kurzbefehle funktionieren nicht</summary>
+            <div class="body">
+                <p>Stelle sicher, dass die App mindestens einmal gestartet und ein Server eingerichtet wurde. Die Befehle findest du in der Kurzbefehle-App oder per Siri, z. B. <em>„Was lädt gerade?"</em> oder <em>„Pausiere SABnzbd Client"</em>.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Ich habe einen Fehler gefunden oder einen Wunsch</summary>
+            <div class="body">
+                <p>Super – schreib uns an <a href="mailto:kontakt@witting.info?subject=SABnzbd%20Client%20Feedback">kontakt@witting.info</a>. Hilfreich sind: iOS-Version, App-Version und eine kurze Beschreibung, wie der Fehler auftritt.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- ==================== ENGLISH ==================== -->
+    <div data-lang="en">
+        <span class="eyebrow">Support</span>
+        <h1>How can we help?</h1>
+        <p class="lead">Questions, bugs or feature ideas about <strong>SABnzbd Client</strong>? Get in touch — we'll reply as soon as we can.</p>
+
+        <div class="contact">
+            <a class="btn btn-primary" href="mailto:kontakt@witting.info?subject=SABnzbd%20Client%20Support">✉ Email support</a>
+            <a class="btn btn-secondary" href="/sabnzbd/datenschutz">Privacy</a>
+        </div>
+
+        <div class="meta">
+            <div><span>App</span><b>SABnzbd Client</b></div>
+            <div><span>Version</span><b>1.0</b></div>
+            <div><span>System</span><b>iOS 26 or later</b></div>
+            <div><span>Response time</span><b>usually 1–2 days</b></div>
+        </div>
+
+        <h2>Frequently asked questions</h2>
+
+        <details>
+            <summary>The app won't connect to my server</summary>
+            <div class="body">
+                <p>Please check the following:</p>
+                <ul>
+                    <li>Are the <b>host address</b> and <b>port</b> correct? The default port is often <code>8080</code>.</li>
+                    <li>Is the <b>API key</b> correct? Find it in SABnzbd under <em>Config → General → API Key</em>.</li>
+                    <li>If <b>SSL/HTTPS</b> is enabled on the server, enable the toggle in the app as well.</li>
+                    <li>Are your iPhone and server on the <b>same network</b>? Remote access needs a reachable address (e.g. VPN or port forwarding).</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>Where do I find my API key?</summary>
+            <div class="body">
+                <p>In the SABnzbd web interface under <em>Config → General</em>. Look for the <b>API Key</b> field, copy the value and paste it when setting up the server in the app.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Is my data stored anywhere?</summary>
+            <div class="body">
+                <p>No. Server addresses and settings stay locally on your device, and the API key is kept securely in the iOS Keychain. There is no tracking and no cloud. See the <a href="/sabnzbd/datenschutz">privacy policy</a> for details.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Can I manage multiple servers?</summary>
+            <div class="body">
+                <p>Yes. In the settings you can add, edit and switch between as many SABnzbd servers as you like.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Siri Shortcuts aren't working</summary>
+            <div class="body">
+                <p>Make sure the app has been launched at least once and a server is set up. You'll find the commands in the Shortcuts app or via Siri, e.g. <em>"What's downloading?"</em> or <em>"Pause SABnzbd Client"</em>.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>I found a bug or have a request</summary>
+            <div class="body">
+                <p>Great — email us at <a href="mailto:kontakt@witting.info?subject=SABnzbd%20Client%20Feedback">kontakt@witting.info</a>. It helps to include your iOS version, app version and a short description of how the issue occurs.</p>
+            </div>
+        </details>
+    </div>
+
+    <footer>
+        <span data-lang="de">© 2026 witting.info · <a href="/sabnzbd/datenschutz">Datenschutz</a> · <a href="https://witting.info">Startseite</a></span>
+        <span data-lang="en">© 2026 witting.info · <a href="/sabnzbd/datenschutz">Privacy</a> · <a href="https://witting.info">Home</a></span>
+    </footer>
+</div>
+
+<script>
+    (function () {
+        var html = document.documentElement;
+        var saved = null;
+        try { saved = localStorage.getItem('sab-lang'); } catch (e) {}
+        var initial = saved || (navigator.language && navigator.language.toLowerCase().indexOf('de') === 0 ? 'de' : 'en');
+        set(initial);
+        document.querySelectorAll('.lang button').forEach(function (b) {
+            b.addEventListener('click', function () { set(b.dataset.set); });
+        });
+        function set(lang) {
+            if (lang !== 'de' && lang !== 'en') lang = 'de';
+            html.setAttribute('data-active', lang);
+            html.setAttribute('lang', lang);
+            document.querySelectorAll('.lang button').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.set === lang);
+            });
+            try { localStorage.setItem('sab-lang', lang); } catch (e) {}
+        }
+    })();
+</script>
+</body>
+</html>

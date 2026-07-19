@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datenschutz – SABnzbd Client</title>
+<meta name="description" content="Datenschutzerklärung der App SABnzbd Client. Die App erhebt, speichert und überträgt keine personenbezogenen Daten an uns.">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #fbfbfd;
+        --surface: #ffffff;
+        --text: #0c0e14;
+        --text-secondary: #666c78;
+        --text-tertiary: #99a0ab;
+        --border: rgba(12, 14, 20, 0.08);
+        --border-soft: rgba(12, 14, 20, 0.05);
+        --accent: #0ea5e9;
+        --accent-dark: #0369a1;
+        --accent-soft: #e6f6fe;
+        --accent2: #6366f1;
+        --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
+        --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.08);
+        --radius: 20px;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #090b12;
+            --surface: #12151f;
+            --text: #f4f6fb;
+            --text-secondary: #a8b0bd;
+            --text-tertiary: #6b7280;
+            --border: rgba(255, 255, 255, 0.10);
+            --border-soft: rgba(255, 255, 255, 0.06);
+            --accent-soft: rgba(14, 165, 233, 0.12);
+        }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+    }
+    .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .ambient span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.30; }
+    .ambient span:nth-child(1) { width: 480px; height: 480px; top: -180px; left: -140px; background: radial-gradient(circle, #7dd3fc, transparent 70%); }
+    .ambient span:nth-child(2) { width: 420px; height: 420px; top: 30%; right: -180px; background: radial-gradient(circle, #a5b4fc, transparent 70%); }
+
+    .wrap { max-width: 780px; margin: 0 auto; padding: 48px 24px 96px; }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); font-weight: 700; }
+    .brand .dot { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow: var(--shadow-md); }
+    .brand small { display: block; font-weight: 500; font-size: 0.78rem; color: var(--text-secondary); }
+
+    .lang { display: inline-flex; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 4px; box-shadow: var(--shadow-sm); }
+    .lang button { border: 0; background: transparent; color: var(--text-secondary); font: inherit; font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 100px; cursor: pointer; transition: all .2s ease; }
+    .lang button.active { background: var(--accent); color: #fff; box-shadow: var(--shadow-sm); }
+
+    .eyebrow { display: inline-block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dark); background: var(--accent-soft); padding: 6px 14px; border-radius: 100px; margin-bottom: 16px; }
+    h1 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 10px; }
+    .updated { color: var(--text-tertiary); font-size: 0.9rem; margin-bottom: 36px; }
+
+    .callout { background: var(--accent-soft); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin: 0 0 36px; font-size: 1.02rem; }
+    .callout strong { color: var(--accent-dark); }
+
+    section { margin-bottom: 34px; }
+    h2 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
+    p { color: var(--text-secondary); margin-bottom: 12px; }
+    ul { color: var(--text-secondary); padding-left: 22px; margin-bottom: 12px; }
+    li { margin-bottom: 8px; }
+    a { color: var(--accent-dark); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow-sm); }
+
+    footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border-soft); color: var(--text-tertiary); font-size: 0.88rem; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+    footer a { color: var(--text-secondary); }
+
+    [data-lang] { display: none; }
+    html[data-active="de"] [data-lang="de"] { display: revert; }
+    html[data-active="en"] [data-lang="en"] { display: revert; }
+    /* keep block-level defaults */
+    html[data-active="de"] section[data-lang="de"], html[data-active="en"] section[data-lang="en"] { display: block; }
+</style>
+</head>
+<body>
+<div class="ambient"><span></span><span></span></div>
+<div class="wrap">
+    <div class="topbar">
+        <a class="brand" href="https://witting.info">
+            <span class="dot"></span>
+            <span>SABnzbd Client<small>by witting.info</small></span>
+        </a>
+        <div class="lang" role="group" aria-label="Sprache / Language">
+            <button type="button" data-set="de" class="active">DE</button>
+            <button type="button" data-set="en">EN</button>
+        </div>
+    </div>
+
+    <!-- ==================== DEUTSCH ==================== -->
+    <div data-lang="de">
+        <span class="eyebrow">Datenschutz</span>
+        <h1>Datenschutzerklärung</h1>
+        <p class="updated">SABnzbd Client · Stand: 19. Juli 2026</p>
+
+        <div class="callout">
+            <strong>Kurzfassung:</strong> SABnzbd Client erhebt, speichert und überträgt <strong>keine</strong> personenbezogenen Daten an uns oder an Dritte. Es gibt kein Tracking, keine Analyse-Tools und keine Werbe-SDKs. Die App kommuniziert ausschließlich mit dem SABnzbd-Server, den du selbst einträgst.
+        </div>
+
+        <section>
+            <h2>1. Verantwortlicher</h2>
+            <div class="card">
+                witting.info<br>
+                Maximilian Witting<br>
+                E-Mail: <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. Welche Daten verarbeitet die App?</h2>
+            <p>Die App ist ein reiner Client für deinen eigenen SABnzbd-Server. Sie besitzt keinen eigenen Server und keine Nutzerkonten. Es werden ausschließlich folgende Daten <strong>lokal auf deinem Gerät</strong> gespeichert:</p>
+            <ul>
+                <li><strong>Serverdaten:</strong> Adresse (Host/Port), Verbindungseinstellungen und Kategorien der von dir hinzugefügten SABnzbd-Server.</li>
+                <li><strong>API-Schlüssel:</strong> Der Zugangsschlüssel zu deinem SABnzbd-Server wird sicher im <strong>iOS-Schlüsselbund (Keychain)</strong> gespeichert.</li>
+                <li><strong>App-Einstellungen:</strong> Deine Präferenzen (z. B. Onboarding-Status, Ansichts-Einstellungen).</li>
+            </ul>
+            <p>Diese Daten verlassen dein Gerät nicht – außer für die direkte Verbindung zu dem von dir eingetragenen Server (siehe Punkt 3).</p>
+        </section>
+
+        <section>
+            <h2>3. Verbindung zu deinem SABnzbd-Server</h2>
+            <p>Um Downloads anzuzeigen und zu steuern, sendet die App Anfragen an die Adresse, die du selbst konfiguriert hast. Dabei werden Serveradresse und API-Schlüssel an genau diesen Server übertragen – üblicherweise ein Gerät in deinem eigenen Netzwerk oder ein von dir gewählter Host. Wohin diese Verbindung geht, bestimmst allein du. Wir haben zu keinem Zeitpunkt Zugriff auf diese Verbindung oder deren Inhalte.</p>
+        </section>
+
+        <section>
+            <h2>4. Kein Tracking, keine Analyse, keine Werbung</h2>
+            <p>Die App enthält <strong>keine</strong> Analyse-, Tracking- oder Werbe-Frameworks (z. B. Google Analytics, Firebase, Facebook SDK). Es findet kein „App-Tracking" im Sinne der App-Tracking-Transparency statt. Es werden keine Nutzungsprofile erstellt und keine Kennungen an Dritte weitergegeben.</p>
+        </section>
+
+        <section>
+            <h2>5. Siri &amp; Kurzbefehle</h2>
+            <p>Die App bietet Siri-Kurzbefehle (AppIntents). Die Verarbeitung von Sprachbefehlen erfolgt durch Apple gemäß der <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Datenschutzrichtlinie von Apple</a>. Die App selbst erhält dabei nur den ausgeführten Befehl und reicht keine Daten an uns weiter.</p>
+        </section>
+
+        <section>
+            <h2>6. Datenlöschung</h2>
+            <p>Alle lokal gespeicherten Daten kannst du jederzeit entfernen, indem du Server in den Einstellungen löschst oder die App vom Gerät deinstallierst. Beim Deinstallieren werden auch die im Schlüsselbund abgelegten API-Schlüssel entfernt.</p>
+        </section>
+
+        <section>
+            <h2>7. Deine Rechte</h2>
+            <p>Da wir keine personenbezogenen Daten von dir erheben oder speichern, liegen uns auch keine Daten vor, auf die sich Auskunfts-, Berichtigungs- oder Löschansprüche (Art. 15–21 DSGVO) beziehen könnten. Bei Fragen zum Datenschutz erreichst du uns unter <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>.</p>
+        </section>
+
+        <section>
+            <h2>8. Änderungen</h2>
+            <p>Wir können diese Datenschutzerklärung anpassen, wenn sich die App oder die rechtlichen Rahmenbedingungen ändern. Die jeweils aktuelle Fassung ist immer unter dieser Adresse abrufbar.</p>
+        </section>
+    </div>
+
+    <!-- ==================== ENGLISH ==================== -->
+    <div data-lang="en">
+        <span class="eyebrow">Privacy</span>
+        <h1>Privacy Policy</h1>
+        <p class="updated">SABnzbd Client · Last updated: 19 July 2026</p>
+
+        <div class="callout">
+            <strong>In short:</strong> SABnzbd Client collects, stores and transmits <strong>no</strong> personal data to us or any third party. There is no tracking, no analytics and no advertising SDKs. The app communicates only with the SABnzbd server you configure yourself.
+        </div>
+
+        <section>
+            <h2>1. Controller</h2>
+            <div class="card">
+                witting.info<br>
+                Maximilian Witting<br>
+                Email: <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. What data does the app process?</h2>
+            <p>The app is purely a client for your own SABnzbd server. It has no backend of its own and no user accounts. Only the following data is stored <strong>locally on your device</strong>:</p>
+            <ul>
+                <li><strong>Server details:</strong> address (host/port), connection settings and categories of the SABnzbd servers you add.</li>
+                <li><strong>API key:</strong> the access key for your SABnzbd server is stored securely in the <strong>iOS Keychain</strong>.</li>
+                <li><strong>App settings:</strong> your preferences (e.g. onboarding state, view options).</li>
+            </ul>
+            <p>This data never leaves your device — except for the direct connection to the server you entered (see section 3).</p>
+        </section>
+
+        <section>
+            <h2>3. Connection to your SABnzbd server</h2>
+            <p>To display and control downloads, the app sends requests to the address you configured. Your server address and API key are transmitted to exactly that server — typically a device on your own network or a host of your choosing. You alone decide where this connection goes. We never have access to this connection or its contents.</p>
+        </section>
+
+        <section>
+            <h2>4. No tracking, no analytics, no advertising</h2>
+            <p>The app contains <strong>no</strong> analytics, tracking or advertising frameworks (e.g. Google Analytics, Firebase, Facebook SDK). No "app tracking" under App Tracking Transparency takes place. No usage profiles are created and no identifiers are shared with third parties.</p>
+        </section>
+
+        <section>
+            <h2>5. Siri &amp; Shortcuts</h2>
+            <p>The app offers Siri Shortcuts (AppIntents). Voice command processing is handled by Apple under <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>. The app only receives the executed command and forwards no data to us.</p>
+        </section>
+
+        <section>
+            <h2>6. Deleting your data</h2>
+            <p>You can remove all locally stored data at any time by deleting servers in the settings or by uninstalling the app. Uninstalling also removes the API keys stored in the Keychain.</p>
+        </section>
+
+        <section>
+            <h2>7. Your rights</h2>
+            <p>As we do not collect or store any personal data about you, we hold no data to which rights of access, rectification or erasure (Art. 15–21 GDPR) could apply. For any privacy questions, contact us at <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>.</p>
+        </section>
+
+        <section>
+            <h2>8. Changes</h2>
+            <p>We may update this privacy policy if the app or the legal framework changes. The current version is always available at this address.</p>
+        </section>
+    </div>
+
+    <footer>
+        <span data-lang="de">© 2026 witting.info · <a href="/sabnzbd/support">Support</a> · <a href="https://witting.info">Startseite</a></span>
+        <span data-lang="en">© 2026 witting.info · <a href="/sabnzbd/support">Support</a> · <a href="https://witting.info">Home</a></span>
+    </footer>
+</div>
+
+<script>
+    (function () {
+        var html = document.documentElement;
+        var saved = null;
+        try { saved = localStorage.getItem('sab-lang'); } catch (e) {}
+        var initial = saved || (navigator.language && navigator.language.toLowerCase().indexOf('de') === 0 ? 'de' : 'en');
+        set(initial);
+        document.querySelectorAll('.lang button').forEach(function (b) {
+            b.addEventListener('click', function () { set(b.dataset.set); });
+        });
+        function set(lang) {
+            if (lang !== 'de' && lang !== 'en') lang = 'de';
+            html.setAttribute('data-active', lang);
+            html.setAttribute('lang', lang);
+            document.querySelectorAll('.lang button').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.set === lang);
+            });
+            try { localStorage.setItem('sab-lang', lang); } catch (e) {}
+        }
+    })();
+</script>
+</body>
+</html>
