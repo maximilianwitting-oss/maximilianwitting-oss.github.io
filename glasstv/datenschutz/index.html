@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datenschutz – GlassTV</title>
+<meta name="description" content="Datenschutzerklärung der App GlassTV. Die App erhebt keine personenbezogenen Daten, verbindet sich nur mit den von dir eingetragenen Quellen und enthält kein Tracking.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://witting.info/glasstv/datenschutz/">
+<link rel="icon" href="/glasstv/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/glasstv/apple-touch-icon.png">
+<meta name="theme-color" content="#7c6ce0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Datenschutz – GlassTV">
+<meta property="og:description" content="GlassTV erhebt keine personenbezogenen Daten. Kein Tracking, keine Werbung, kein Server von uns.">
+<meta property="og:url" content="https://witting.info/glasstv/datenschutz/">
+<meta property="og:image" content="https://witting.info/glasstv/icon.png">
+<meta name="twitter:card" content="summary">
+<style>
+    :root {
+        --bg: #fbfbfd;
+        --surface: #ffffff;
+        --text: #0c0e14;
+        --text-secondary: #5f6470;
+        --text-tertiary: #7b8290;
+        --border: rgba(12, 14, 20, 0.08);
+        --border-soft: rgba(12, 14, 20, 0.05);
+        --accent: #7c6ce0;
+        --accent-dark: #5b46c4;
+        --accent-soft: #f0edfd;
+        --accent2: #a78bfa;
+        --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
+        --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.08);
+        --radius: 20px;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #0a0912;
+            --surface: #14121f;
+            --text: #f4f6fb;
+            --text-secondary: #aeb2c0;
+            --text-tertiary: #8b90a0;
+            --border: rgba(255, 255, 255, 0.10);
+            --border-soft: rgba(255, 255, 255, 0.06);
+            --accent: #8b7ae8;
+            --accent-dark: #b9adf7;
+            --accent-soft: rgba(124, 108, 224, 0.16);
+        }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+
+    .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .ambient span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.30; }
+    .ambient span:nth-child(1) { width: 480px; height: 480px; top: -180px; left: -140px; background: radial-gradient(circle, #a78bfa, transparent 70%); }
+    .ambient span:nth-child(2) { width: 420px; height: 420px; top: 30%; right: -180px; background: radial-gradient(circle, #818cf8, transparent 70%); }
+
+    .skip-link {
+        position: absolute; left: 16px; top: -60px;
+        background: var(--surface); color: var(--text);
+        border: 1px solid var(--border); border-radius: 10px;
+        padding: 10px 16px; font-weight: 600; text-decoration: none;
+        z-index: 10; transition: top .2s ease;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .wrap { max-width: 780px; margin: 0 auto; padding: 48px 24px 96px; }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); font-weight: 700; }
+    .brand img { width: 40px; height: 40px; border-radius: 10px; box-shadow: var(--shadow-md); }
+    .brand small { display: block; font-weight: 500; font-size: 0.78rem; color: var(--text-secondary); }
+
+    .lang { display: inline-flex; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 4px; box-shadow: var(--shadow-sm); }
+    .lang button { border: 0; background: transparent; color: var(--text-secondary); font: inherit; font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 100px; cursor: pointer; transition: all .2s ease; }
+    .lang button.active { background: var(--accent); color: #fff; box-shadow: var(--shadow-sm); }
+
+    .eyebrow { display: inline-block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dark); background: var(--accent-soft); padding: 6px 14px; border-radius: 100px; margin-bottom: 16px; }
+    h1 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 10px; }
+    .updated { color: var(--text-tertiary); font-size: 0.9rem; margin-bottom: 36px; }
+
+    .callout { background: var(--accent-soft); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin: 0 0 36px; font-size: 1.02rem; }
+    .callout strong { color: var(--accent-dark); }
+
+    section { margin-bottom: 34px; }
+    h2 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
+    p { color: var(--text-secondary); margin-bottom: 12px; }
+    ul { color: var(--text-secondary); padding-left: 22px; margin-bottom: 12px; }
+    li { margin-bottom: 8px; }
+    code { background: var(--accent-soft); color: var(--accent-dark); padding: 1px 6px; border-radius: 6px; font-size: 0.9em; word-break: break-word; }
+    a { color: var(--accent-dark); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow-sm); }
+
+    footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border-soft); color: var(--text-tertiary); font-size: 0.88rem; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+    footer a { color: var(--text-secondary); }
+
+    [data-lang] { display: none; }
+    html[data-active="de"] [data-lang="de"] { display: revert; }
+    html[data-active="en"] [data-lang="en"] { display: revert; }
+    html[data-active="de"] section[data-lang="de"], html[data-active="en"] section[data-lang="en"] { display: block; }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        html { scroll-behavior: auto; }
+    }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" data-lang="de">Zum Inhalt springen</a>
+<a class="skip-link" href="#main" data-lang="en">Skip to content</a>
+<div class="ambient" aria-hidden="true"><span></span><span></span></div>
+<div class="wrap">
+    <div class="topbar">
+        <a class="brand" href="https://witting.info">
+            <img src="/glasstv/icon.png" width="40" height="40" alt="">
+            <span>GlassTV<small>by witting.info</small></span>
+        </a>
+        <div class="lang" role="group" aria-label="Sprache / Language">
+            <button type="button" data-set="de" class="active">DE</button>
+            <button type="button" data-set="en">EN</button>
+        </div>
+    </div>
+
+    <main id="main">
+    <!-- ==================== DEUTSCH ==================== -->
+    <div data-lang="de">
+        <span class="eyebrow">Datenschutz</span>
+        <h1>Datenschutzerklärung</h1>
+        <p class="updated">GlassTV · Stand: 9. August 2026</p>
+
+        <div class="callout">
+            <strong>Kurzfassung:</strong> GlassTV erhebt, speichert und überträgt <strong>keine</strong> personenbezogenen Daten an uns oder an Dritte. Es gibt kein Tracking, keine Analyse-Tools und keine Werbe-SDKs. Die App besitzt keinen eigenen Server – sie verbindet sich ausschließlich mit den Quellen, die du selbst einträgst.
+        </div>
+
+        <section>
+            <h2>1. Verantwortlicher</h2>
+            <div class="card">
+                witting.info<br>
+                Maximilian Witting<br>
+                E-Mail: <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. Welche Daten verarbeitet die App?</h2>
+            <p>GlassTV ist ein reiner Abspieler für deine eigenen Quellen. Es gibt kein Nutzerkonto und keine Registrierung. Folgende Daten werden ausschließlich <strong>lokal auf deinem Gerät</strong> gespeichert:</p>
+            <ul>
+                <li><strong>Quellen und Zugangsdaten:</strong> die von dir eingetragenen M3U-/EPG-Adressen bzw. Serveradresse, Benutzername und Passwort deines Xtream-Zugangs.</li>
+                <li><strong>Inhaltsverzeichnis:</strong> die von deiner Quelle geladene Liste an Sendern, Filmen, Serien und Programmdaten (Zwischenspeicher, damit die App nicht bei jedem Start alles neu laden muss).</li>
+                <li><strong>Nutzungsdaten in der App:</strong> Favoriten, Merkliste, eigene Listen, Wiedergabeverlauf mit Fortschritt und die daraus errechneten Empfehlungen.</li>
+                <li><strong>Profile:</strong> Name, Symbol bzw. selbst gewähltes Profilbild sowie die PIN der Kindersicherung.</li>
+                <li><strong>Einstellungen:</strong> z. B. Design, Sprachauswahl, Start-Tab, Player-Optionen.</li>
+            </ul>
+            <p>Diese Daten verlassen dein Gerät nicht – außer bei der direkten Verbindung zu deiner Quelle (Punkt 3) und, falls von dir aktiviert, beim iCloud-Abgleich (Punkt 4).</p>
+        </section>
+
+        <section>
+            <h2>3. Verbindung zu deinen Quellen</h2>
+            <p>Um Inhalte anzuzeigen und abzuspielen, ruft die App genau die Adressen auf, die du selbst eingetragen hast: deine Playlist, deinen Xtream-Server, deine EPG-Datei sowie die darin verlinkten Streams, Poster und Senderlogos.</p>
+            <p>Bei Xtream-Zugängen werden Benutzername und Passwort an diesen Server übertragen – so verlangt es das Protokoll. Wie bei jedem Internetzugriff sind für den jeweiligen Anbieter dabei technisch bedingt deine IP-Adresse und der Zeitpunkt des Abrufs sichtbar. <strong>Wofür dein Anbieter diese Daten verwendet, entzieht sich unserer Kenntnis und unserem Einfluss</strong> – bitte sieh dazu in dessen Datenschutzerklärung nach.</p>
+            <p>Wir betreiben keinen Vermittlungsserver: Der Datenverkehr läuft direkt zwischen deinem Gerät und deinem Anbieter. Wir haben zu keinem Zeitpunkt Zugriff darauf.</p>
+            <p>Lädst du auf der Startseite die <strong>Demo-Inhalte</strong>, werden ausschließlich öffentlich verfügbare Beispielstreams von Apple und anderen frei zugänglichen Testquellen abgerufen – und nur dann, wenn du den Button selbst antippst.</p>
+        </section>
+
+        <section>
+            <h2>4. iCloud-Synchronisierung (optional)</h2>
+            <p>Auf Wunsch gleicht GlassTV deine Quellen, Favoriten, Listen und Einstellungen zwischen deinen eigenen Apple-Geräten ab. Diese Funktion ist <strong>standardmäßig ausgeschaltet</strong> und muss in den Einstellungen aktiv eingeschaltet werden.</p>
+            <p>Der Abgleich läuft über den privaten Schlüssel-Wert-Speicher deiner eigenen iCloud (Apple iCloud Key-Value Store). Die Daten liegen damit in deinem Apple-Konto; es gelten die <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Datenschutzrichtlinien von Apple</a>. Wir erhalten diese Daten nicht und haben keinen Zugriff darauf. Schaltest du die Funktion ab, findet kein weiterer Abgleich statt.</p>
+        </section>
+
+        <section>
+            <h2>5. Fotos und Profilbilder</h2>
+            <p>Wählst du ein eigenes Profilbild, geschieht die Auswahl über Apples System-Fotoauswahl. Die App erhält dabei <strong>nur das eine von dir ausgewählte Bild</strong> und keinen Zugriff auf deine Fotobibliothek. Das Bild wird beschnitten und lokal im App-Ordner abgelegt; es wird nicht hochgeladen.</p>
+        </section>
+
+        <section>
+            <h2>6. Kein Tracking, keine Analyse, keine Werbung</h2>
+            <p>Die App enthält <strong>keine</strong> Analyse-, Tracking- oder Werbe-Frameworks (z. B. Google Analytics, Firebase, Facebook SDK). Es findet kein „App-Tracking" im Sinne der App-Tracking-Transparency statt. Es werden keine Nutzungsprofile für uns erstellt und keine Kennungen an Dritte weitergegeben.</p>
+            <p>Statistiken innerhalb der App (z. B. deine meistgesehenen Sender) werden ausschließlich auf deinem Gerät aus deinem lokalen Verlauf berechnet und nirgendwohin übermittelt.</p>
+        </section>
+
+        <section>
+            <h2>7. App Store und Absturzberichte</h2>
+            <p>Kauf bzw. Laden der App wickelt Apple ab; dabei anfallende Daten verarbeitet Apple in eigener Verantwortung. Hast du in den Systemeinstellungen deines Geräts der Weitergabe von Analysedaten an Entwickler zugestimmt, stellt Apple uns anonymisierte Absturz- und Nutzungsstatistiken bereit. Diese enthalten keine Angaben, mit denen wir dich identifizieren könnten, und lassen sich jederzeit unter <em>Einstellungen → Datenschutz &amp; Sicherheit → Analyse &amp; Verbesserungen</em> abschalten.</p>
+        </section>
+
+        <section>
+            <h2>8. Inhalte Dritter</h2>
+            <p>GlassTV liefert selbst keinerlei Inhalte und stellt keine Verbindung zu Anbietern von Streaming-Abos her. Für die Rechtmäßigkeit der Quellen, die du in der App einträgst, bist ausschließlich du verantwortlich.</p>
+        </section>
+
+        <section>
+            <h2>9. Datenlöschung</h2>
+            <p>Du kannst jederzeit einzelne Quellen, Profile oder den Wiedergabeverlauf in den Einstellungen löschen. Beim Deinstallieren der App werden sämtliche lokal gespeicherten Daten inklusive Zugangsdaten und Profilbildern entfernt. In iCloud abgelegte Einstellungen löschst du über <em>Einstellungen → [dein Name] → iCloud</em> auf deinem Gerät.</p>
+        </section>
+
+        <section>
+            <h2>10. Deine Rechte</h2>
+            <p>Da wir keine personenbezogenen Daten von dir erheben oder speichern, liegen uns auch keine Daten vor, auf die sich Auskunfts-, Berichtigungs- oder Löschansprüche (Art. 15–21 DSGVO) beziehen könnten. Bei Fragen zum Datenschutz erreichst du uns unter <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>.</p>
+        </section>
+
+        <section>
+            <h2>11. Änderungen</h2>
+            <p>Wir können diese Datenschutzerklärung anpassen, wenn sich die App oder die rechtlichen Rahmenbedingungen ändern. Die jeweils aktuelle Fassung ist immer unter dieser Adresse abrufbar.</p>
+        </section>
+    </div>
+
+    <!-- ==================== ENGLISH ==================== -->
+    <div data-lang="en">
+        <span class="eyebrow">Privacy</span>
+        <h1>Privacy Policy</h1>
+        <p class="updated">GlassTV · Last updated: 9 August 2026</p>
+
+        <div class="callout">
+            <strong>In short:</strong> GlassTV collects, stores and transmits <strong>no</strong> personal data to us or any third party. There is no tracking, no analytics and no advertising SDKs. The app has no backend of its own — it connects only to the sources you enter yourself.
+        </div>
+
+        <section>
+            <h2>1. Controller</h2>
+            <div class="card">
+                witting.info<br>
+                Maximilian Witting<br>
+                Email: <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. What data does the app process?</h2>
+            <p>GlassTV is purely a player for your own sources. There is no user account and no registration. The following data is stored <strong>locally on your device</strong> only:</p>
+            <ul>
+                <li><strong>Sources and credentials:</strong> the M3U/EPG addresses you enter, or the server address, username and password of your Xtream account.</li>
+                <li><strong>Content index:</strong> the list of channels, movies, series and programme data loaded from your source (cached so the app doesn't have to reload everything on each launch).</li>
+                <li><strong>In-app usage data:</strong> favourites, watchlist, custom lists, playback history with progress, and the recommendations derived from them.</li>
+                <li><strong>Profiles:</strong> name, symbol or your own profile picture, and the parental-control PIN.</li>
+                <li><strong>Settings:</strong> e.g. theme, language selection, start tab, player options.</li>
+            </ul>
+            <p>This data never leaves your device — except for the direct connection to your source (section 3) and, if you enable it, iCloud sync (section 4).</p>
+        </section>
+
+        <section>
+            <h2>3. Connection to your sources</h2>
+            <p>To display and play content, the app requests exactly the addresses you entered: your playlist, your Xtream server, your EPG file and the streams, posters and channel logos referenced within them.</p>
+            <p>For Xtream accounts, your username and password are transmitted to that server — the protocol requires it. As with any internet request, your IP address and the time of access are technically visible to that provider. <strong>What your provider does with this data is outside our knowledge and control</strong> — please consult their privacy policy.</p>
+            <p>We operate no relay server: traffic flows directly between your device and your provider. We never have access to it.</p>
+            <p>If you load the <strong>demo content</strong> from the home screen, only publicly available sample streams from Apple and other freely accessible test sources are requested — and only when you tap the button yourself.</p>
+        </section>
+
+        <section>
+            <h2>4. iCloud sync (optional)</h2>
+            <p>On request, GlassTV syncs your sources, favourites, lists and settings between your own Apple devices. This feature is <strong>off by default</strong> and must be switched on explicitly in the settings.</p>
+            <p>Syncing uses the private key-value store of your own iCloud account (Apple iCloud Key-Value Store). The data therefore resides in your Apple account and is subject to <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>. We neither receive this data nor have access to it. Turning the feature off stops any further syncing.</p>
+        </section>
+
+        <section>
+            <h2>5. Photos and profile pictures</h2>
+            <p>If you choose your own profile picture, the selection happens through Apple's system photo picker. The app receives <strong>only the single image you selected</strong> and no access to your photo library. The image is cropped and stored locally in the app's folder; it is never uploaded.</p>
+        </section>
+
+        <section>
+            <h2>6. No tracking, no analytics, no advertising</h2>
+            <p>The app contains <strong>no</strong> analytics, tracking or advertising frameworks (e.g. Google Analytics, Firebase, Facebook SDK). No "app tracking" under App Tracking Transparency takes place. No usage profiles are created for us and no identifiers are shared with third parties.</p>
+            <p>In-app statistics (e.g. your most-watched channels) are calculated on your device from your local history and are never transmitted anywhere.</p>
+        </section>
+
+        <section>
+            <h2>7. App Store and crash reports</h2>
+            <p>Downloading or purchasing the app is handled by Apple, who process the resulting data under their own responsibility. If you have agreed in your device settings to share analytics with developers, Apple provides us with anonymised crash and usage statistics. These contain nothing that would let us identify you and can be switched off at any time under <em>Settings → Privacy &amp; Security → Analytics &amp; Improvements</em>.</p>
+        </section>
+
+        <section>
+            <h2>8. Third-party content</h2>
+            <p>GlassTV supplies no content of its own and establishes no connection to streaming subscription providers. You alone are responsible for the legality of the sources you add to the app.</p>
+        </section>
+
+        <section>
+            <h2>9. Deleting your data</h2>
+            <p>You can delete individual sources, profiles or your playback history in the settings at any time. Uninstalling the app removes all locally stored data, including credentials and profile pictures. Settings stored in iCloud can be removed via <em>Settings → [your name] → iCloud</em> on your device.</p>
+        </section>
+
+        <section>
+            <h2>10. Your rights</h2>
+            <p>As we do not collect or store any personal data about you, we hold no data to which rights of access, rectification or erasure (Art. 15–21 GDPR) could apply. For any privacy questions, contact us at <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>.</p>
+        </section>
+
+        <section>
+            <h2>11. Changes</h2>
+            <p>We may update this privacy policy if the app or the legal framework changes. The current version is always available at this address.</p>
+        </section>
+    </div>
+    </main>
+
+    <footer>
+        <span data-lang="de">© 2026 witting.info · <a href="/glasstv/support/">Support</a> · <a href="https://witting.info">Startseite</a></span>
+        <span data-lang="en">© 2026 witting.info · <a href="/glasstv/support/">Support</a> · <a href="https://witting.info">Home</a></span>
+        <span><a href="mailto:kontakt@witting.info">kontakt@witting.info</a></span>
+    </footer>
+</div>
+
+<script>
+    (function () {
+        var html = document.documentElement;
+        var saved = null;
+        try { saved = localStorage.getItem('gtv-lang'); } catch (e) {}
+        var initial = saved || (navigator.language && navigator.language.toLowerCase().indexOf('de') === 0 ? 'de' : 'en');
+        set(initial);
+        document.querySelectorAll('.lang button').forEach(function (b) {
+            b.addEventListener('click', function () { set(b.dataset.set); });
+        });
+        function set(lang) {
+            if (lang !== 'de' && lang !== 'en') lang = 'de';
+            html.setAttribute('data-active', lang);
+            html.setAttribute('lang', lang);
+            document.querySelectorAll('.lang button').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.set === lang);
+            });
+            try { localStorage.setItem('gtv-lang', lang); } catch (e) {}
+        }
+    })();
+</script>
+</body>
+</html>
