@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support – GlassTV</title>
+<meta name="description" content="Support und Hilfe für GlassTV, den IPTV-Player für iPhone, iPad, Apple TV und Mac. Kontakt, FAQ und Antworten zu M3U-Playlists, Xtream-Zugängen und EPG.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://witting.info/glasstv/support/">
+<link rel="icon" href="/glasstv/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/glasstv/apple-touch-icon.png">
+<meta name="theme-color" content="#7c6ce0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Support – GlassTV">
+<meta property="og:description" content="Hilfe zu GlassTV: M3U & Xtream einrichten, EPG, Wiedergabeprobleme und Kontakt zum Support.">
+<meta property="og:url" content="https://witting.info/glasstv/support/">
+<meta property="og:image" content="https://witting.info/glasstv/icon.png">
+<meta name="twitter:card" content="summary">
+<style>
+    :root {
+        --bg: #fbfbfd;
+        --surface: #ffffff;
+        --text: #0c0e14;
+        --text-secondary: #5f6470;
+        --text-tertiary: #7b8290;
+        --border: rgba(12, 14, 20, 0.08);
+        --border-soft: rgba(12, 14, 20, 0.05);
+        --accent: #7c6ce0;
+        --accent-dark: #5b46c4;
+        --accent-soft: #f0edfd;
+        --accent2: #a78bfa;
+        --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
+        --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.08);
+        --radius: 20px;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #0a0912;
+            --surface: #14121f;
+            --text: #f4f6fb;
+            --text-secondary: #aeb2c0;
+            --text-tertiary: #8b90a0;
+            --border: rgba(255, 255, 255, 0.10);
+            --border-soft: rgba(255, 255, 255, 0.06);
+            --accent: #8b7ae8;
+            --accent-dark: #b9adf7;
+            --accent-soft: rgba(124, 108, 224, 0.16);
+        }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+
+    .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .ambient span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.30; }
+    .ambient span:nth-child(1) { width: 480px; height: 480px; top: -180px; left: -140px; background: radial-gradient(circle, #a78bfa, transparent 70%); }
+    .ambient span:nth-child(2) { width: 420px; height: 420px; top: 30%; right: -180px; background: radial-gradient(circle, #818cf8, transparent 70%); }
+
+    .skip-link {
+        position: absolute; left: 16px; top: -60px;
+        background: var(--surface); color: var(--text);
+        border: 1px solid var(--border); border-radius: 10px;
+        padding: 10px 16px; font-weight: 600; text-decoration: none;
+        z-index: 10; transition: top .2s ease;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .wrap { max-width: 780px; margin: 0 auto; padding: 48px 24px 96px; }
+
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); font-weight: 700; }
+    .brand img { width: 40px; height: 40px; border-radius: 10px; box-shadow: var(--shadow-md); }
+    .brand small { display: block; font-weight: 500; font-size: 0.78rem; color: var(--text-secondary); }
+
+    .lang { display: inline-flex; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 4px; box-shadow: var(--shadow-sm); }
+    .lang button { border: 0; background: transparent; color: var(--text-secondary); font: inherit; font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 100px; cursor: pointer; transition: all .2s ease; }
+    .lang button.active { background: var(--accent); color: #fff; box-shadow: var(--shadow-sm); }
+
+    .eyebrow { display: inline-block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-dark); background: var(--accent-soft); padding: 6px 14px; border-radius: 100px; margin-bottom: 16px; }
+    h1 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 10px; }
+    .lead { color: var(--text-secondary); font-size: 1.08rem; margin-bottom: 32px; }
+
+    .contact { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 44px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 0.98rem; padding: 13px 22px; border-radius: 100px; transition: transform .2s ease, box-shadow .2s ease; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; box-shadow: var(--shadow-md); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+    .btn-secondary:hover { transform: translateY(-2px); }
+
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 44px; }
+    .meta div { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; box-shadow: var(--shadow-sm); }
+    .meta span { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); margin-bottom: 4px; }
+    .meta b { font-size: 1.02rem; font-weight: 600; }
+
+    h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; margin: 40px 0 18px; }
+    h2:first-of-type { margin-top: 0; }
+
+    .note { background: var(--accent-soft); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; margin-bottom: 32px; color: var(--text-secondary); font-size: 0.96rem; }
+    .note b { color: var(--text); }
+
+    details { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm); overflow: hidden; }
+    summary { cursor: pointer; list-style: none; padding: 18px 20px; font-weight: 600; font-size: 1.02rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--accent-dark); font-size: 1.4rem; font-weight: 400; line-height: 1; transition: transform .2s ease; flex-shrink: 0; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details .body { padding: 0 20px 18px; color: var(--text-secondary); }
+    details .body p { margin-bottom: 10px; }
+    details .body ul, details .body ol { padding-left: 20px; margin-bottom: 10px; }
+    details .body li { margin-bottom: 6px; }
+    code { background: var(--accent-soft); color: var(--accent-dark); padding: 1px 6px; border-radius: 6px; font-size: 0.9em; word-break: break-word; }
+    a { color: var(--accent-dark); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+
+    footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border-soft); color: var(--text-tertiary); font-size: 0.88rem; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+    footer a { color: var(--text-secondary); }
+
+    [data-lang] { display: none; }
+    html[data-active="de"] [data-lang="de"] { display: revert; }
+    html[data-active="en"] [data-lang="en"] { display: revert; }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        html { scroll-behavior: auto; }
+    }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" data-lang="de">Zum Inhalt springen</a>
+<a class="skip-link" href="#main" data-lang="en">Skip to content</a>
+<div class="ambient" aria-hidden="true"><span></span><span></span></div>
+<div class="wrap">
+    <div class="topbar">
+        <a class="brand" href="https://witting.info">
+            <img src="/glasstv/icon.png" width="40" height="40" alt="">
+            <span>GlassTV<small>by witting.info</small></span>
+        </a>
+        <div class="lang" role="group" aria-label="Sprache / Language">
+            <button type="button" data-set="de" class="active">DE</button>
+            <button type="button" data-set="en">EN</button>
+        </div>
+    </div>
+
+    <main id="main">
+    <!-- ==================== DEUTSCH ==================== -->
+    <div data-lang="de">
+        <span class="eyebrow">Support</span>
+        <h1>Wie können wir helfen?</h1>
+        <p class="lead">Fragen, Fehler oder Wünsche zu <strong>GlassTV</strong>? Schreib uns – wir antworten so schnell wie möglich.</p>
+
+        <div class="contact">
+            <a class="btn btn-primary" href="mailto:kontakt@witting.info?subject=GlassTV%20Support">✉ E-Mail an den Support</a>
+            <a class="btn btn-secondary" href="https://witting.info">Startseite</a>
+        </div>
+
+        <div class="meta">
+            <div><span>App</span><b>GlassTV</b></div>
+            <div><span>Version</span><b>2.4</b></div>
+            <div><span>System</span><b>iOS/iPadOS, tvOS &amp; macOS 26</b></div>
+            <div><span>Antwortzeit</span><b>i. d. R. 1–2 Tage</b></div>
+        </div>
+
+        <div class="note">
+            <b>GlassTV liefert keine Inhalte.</b> Die App ist ein reiner Abspieler für deine eigenen Quellen –
+            vergleichbar mit einem Videoplayer. Sender, Filme und Serien stammen ausschließlich aus der
+            M3U-Playlist oder dem Xtream-Zugang, den du selbst einträgst. Wir verkaufen, vermitteln und
+            hosten keine Abos oder Streams.
+        </div>
+
+        <h2>Erste Schritte</h2>
+
+        <details>
+            <summary>Wie füge ich meine Playlist hinzu?</summary>
+            <div class="body">
+                <p>GlassTV unterstützt zwei Arten von Quellen. Beide findest du unter <em>Einstellungen → Quellen → Quelle hinzufügen</em>:</p>
+                <ul>
+                    <li><b>M3U / M3U8</b> – füge die Playlist-URL deines Anbieters ein (oder eine lokale Datei). Für den Programmführer kannst du zusätzlich eine <b>XMLTV-EPG-URL</b> hinterlegen.</li>
+                    <li><b>Xtream Codes</b> – trage <b>Serveradresse</b>, <b>Benutzername</b> und <b>Passwort</b> ein. Die App lädt Sender, Filme und Serien dann automatisch inklusive Kategorien und Programmdaten.</li>
+                </ul>
+                <p>Du kannst beliebig viele Quellen parallel anlegen und einzeln aktualisieren.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Ich habe noch keinen Anbieter – kann ich die App trotzdem ausprobieren?</summary>
+            <div class="body">
+                <p>Ja. Auf der Startseite gibt es den Button <b>„Demo-Inhalte laden"</b>. Damit werden frei verfügbare Beispielstreams geladen, an denen du Oberfläche, Player und Einstellungen ausprobieren kannst – ohne eigenen Zugang.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Auf welchen Geräten läuft GlassTV?</summary>
+            <div class="body">
+                <p>Auf <b>iPhone, iPad, Apple TV und Mac</b> – jeweils ab System-Version 26. Die Oberfläche ist pro Plattform angepasst (z. B. Top-Shelf und Fernbedienungs-Steuerung auf dem Apple TV, Menüleisten-Player und Tastatursteuerung auf dem Mac).</p>
+                <p>Deine Favoriten, Merkliste, Profile und Einstellungen lassen sich optional per <b>iCloud</b> zwischen deinen Geräten synchronisieren (<em>Einstellungen → iCloud-Sync</em>).</p>
+            </div>
+        </details>
+
+        <h2>Häufige Fragen</h2>
+
+        <details>
+            <summary>Es werden nur wenige oder gar keine Sender angezeigt</summary>
+            <div class="body">
+                <p>Fast immer ist ein Filter aktiv. Prüfe der Reihe nach:</p>
+                <ul>
+                    <li><b>Sprachfilter:</b> Beim ersten Start wählst du deine Sprachen aus. Ist <em>„Nur ausgewählte Sprachen"</em> aktiv, blendet GlassTV alles andere aus. Anpassen unter <em>Einstellungen → Sprachen</em>.</li>
+                    <li><b>Kategorien:</b> Pro Quelle lassen sich Gruppen ausblenden (<em>Einstellungen → Quellen → Kategorien</em>).</li>
+                    <li><b>Kindersicherung:</b> Gesperrte Gruppen sind ohne PIN unsichtbar.</li>
+                    <li><b>Profil:</b> Favoriten und Merkliste sind je Profil getrennt – prüfe, ob das richtige Profil aktiv ist.</li>
+                </ul>
+                <p>Hilft nichts davon, aktualisiere die Quelle einmal manuell (<em>Einstellungen → Quellen → Aktualisieren</em>).</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Ein Sender lädt nicht oder zeigt ein schwarzes Bild</summary>
+            <div class="body">
+                <p>GlassTV probiert bei Problemen automatisch mehrere Wege durch und wechselt notfalls auf die zweite Wiedergabe-Engine (VLC). Bleibt es schwarz, liegt es meist an der Quelle:</p>
+                <ul>
+                    <li><b>Verbindungslimit:</b> Viele Anbieter erlauben nur ein oder zwei gleichzeitige Streams. Schließe die Wiedergabe auf anderen Geräten.</li>
+                    <li><b>Toter Link:</b> Teste denselben Sender kurz in einem anderen Player – kommt dort auch nichts, ist die URL beim Anbieter defekt.</li>
+                    <li><b>Anderes Netz:</b> Manche Anbieter blocken Mobilfunk oder bestimmte Regionen. Probiere WLAN bzw. dein Heimnetz.</li>
+                    <li><b>Nur Ton, kein Bild:</b> Kommt bei exotischen Codecs vor. Öffne im Player die Optionen und wechsle Qualität bzw. Audiospur.</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>Filme im MKV-Format ruckeln oder starten nicht</summary>
+            <div class="body">
+                <p>Apples eingebauter Player kann MKV grundsätzlich nicht abspielen. GlassTV erkennt das und schaltet für <code>.mkv</code>, <code>.avi</code>, <code>.ts</code> und ähnliche Formate automatisch auf die VLC-Engine um – die Wiedergabe läuft dort an der zuletzt gesehenen Stelle weiter.</p>
+                <p>Ruckelt es dennoch, ist meist die Bitrate zu hoch für die Verbindung. Wähle nach Möglichkeit eine niedrigere Qualitätsvariante beim Anbieter.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Der Programmführer (EPG) ist leer oder zeigt falsche Zeiten</summary>
+            <div class="body">
+                <ul>
+                    <li><b>Leer:</b> Bei M3U-Quellen muss die <b>XMLTV-URL</b> separat hinterlegt sein (<em>Einstellungen → Quellen → EPG</em>). Ohne sie gibt es keine Programmdaten.</li>
+                    <li><b>Nur einzelne Sender haben Daten:</b> Dann passen die Sender-IDs (<code>tvg-id</code>) der Playlist nicht zur EPG-Datei. Das lässt sich nur beim Anbieter beheben.</li>
+                    <li><b>Alles um Stunden verschoben:</b> Stelle den <b>Zeitversatz</b> für diese Quelle ein (<em>Einstellungen → Quellen → EPG-Zeitversatz</em>), z. B. −60 oder +60 Minuten.</li>
+                </ul>
+                <p>Im Guide bringt dich der Standort-Button jederzeit zurück zur aktuellen Uhrzeit.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Serien sind leer oder doppelt vorhanden</summary>
+            <div class="body">
+                <p>Manche Xtream-Panels liefern dieselbe Serie mehrfach, davon eine Variante ohne Episoden. GlassTV fasst solche Doppel automatisch zusammen und lädt bei Bedarf die Folgen der befüllten Variante nach.</p>
+                <p>Bleibt eine Serie trotzdem leer, öffne sie einmal erneut oder aktualisiere die Quelle. Liefert dein Anbieter keine Episodendaten, kann die App sie nicht anzeigen.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Kann ich Profile für die Familie anlegen?</summary>
+            <div class="body">
+                <p>Ja, bis zu fünf. Jedes Profil hat eigene Favoriten, Merkliste, Verlauf und Empfehlungen; Quellen und Einstellungen bleiben gemeinsam. Profilbilder lassen sich aus der Fotobibliothek wählen oder als Symbol setzen.</p>
+                <p>Zusätzlich gibt es eine <b>Kindersicherung</b> mit PIN, mit der du einzelne Kategorien komplett ausblenden kannst.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Werden meine Daten irgendwo gespeichert?</summary>
+            <div class="body">
+                <p>Nein. Playlists, Zugangsdaten, Verlauf und Einstellungen bleiben lokal auf deinem Gerät. Es gibt kein Tracking, keine Werbung und keinen Server von uns, der deine Daten empfängt – die App verbindet sich ausschließlich mit den Adressen, die du selbst einträgst.</p>
+                <p>Aktivierst du iCloud-Sync, werden deine Einstellungen über deinen privaten iCloud-Schlüssel-Wert-Speicher zwischen deinen eigenen Geräten abgeglichen. Auch darauf haben wir keinen Zugriff.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Wie sichere ich meine Einrichtung?</summary>
+            <div class="body">
+                <p>Unter <em>Einstellungen → Backup</em> kannst du deine Quellen, Favoriten, Listen und Einstellungen als Datei exportieren und auf einem anderen Gerät wieder einspielen. Praktisch beim Gerätewechsel oder vor größeren Umbauten.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Ich habe einen Fehler gefunden oder einen Wunsch</summary>
+            <div class="body">
+                <p>Immer her damit – schreib an <a href="mailto:kontakt@witting.info?subject=GlassTV%20Feedback">kontakt@witting.info</a>. Hilfreich sind:</p>
+                <ul>
+                    <li>Gerät und System-Version (z. B. iPhone 16 Pro, iOS 26.1)</li>
+                    <li>App-Version (steht unten in den Einstellungen)</li>
+                    <li>Art der Quelle (M3U oder Xtream)</li>
+                    <li>Was du getan hast und was stattdessen passiert ist</li>
+                </ul>
+                <p>Bitte sende <b>keine</b> Zugangsdaten oder Playlist-URLs mit – für die Fehlersuche brauchen wir sie nicht.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- ==================== ENGLISH ==================== -->
+    <div data-lang="en">
+        <span class="eyebrow">Support</span>
+        <h1>How can we help?</h1>
+        <p class="lead">Questions, bugs or feature ideas about <strong>GlassTV</strong>? Get in touch — we'll reply as soon as we can.</p>
+
+        <div class="contact">
+            <a class="btn btn-primary" href="mailto:kontakt@witting.info?subject=GlassTV%20Support">✉ Email support</a>
+            <a class="btn btn-secondary" href="https://witting.info">Home</a>
+        </div>
+
+        <div class="meta">
+            <div><span>App</span><b>GlassTV</b></div>
+            <div><span>Version</span><b>2.4</b></div>
+            <div><span>System</span><b>iOS/iPadOS, tvOS &amp; macOS 26</b></div>
+            <div><span>Response time</span><b>usually 1–2 days</b></div>
+        </div>
+
+        <div class="note">
+            <b>GlassTV does not provide any content.</b> The app is purely a player for your own sources —
+            think of it as a video player. Channels, movies and series come exclusively from the M3U playlist
+            or Xtream account that you enter yourself. We do not sell, resell or host any subscriptions or streams.
+        </div>
+
+        <h2>Getting started</h2>
+
+        <details>
+            <summary>How do I add my playlist?</summary>
+            <div class="body">
+                <p>GlassTV supports two kinds of sources. Both live under <em>Settings → Sources → Add source</em>:</p>
+                <ul>
+                    <li><b>M3U / M3U8</b> — paste your provider's playlist URL (or use a local file). For the TV guide you can additionally supply an <b>XMLTV EPG URL</b>.</li>
+                    <li><b>Xtream Codes</b> — enter <b>server address</b>, <b>username</b> and <b>password</b>. The app then loads channels, movies and series including categories and programme data.</li>
+                </ul>
+                <p>You can add as many sources as you like and refresh each one individually.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>I don't have a provider yet — can I still try the app?</summary>
+            <div class="body">
+                <p>Yes. The home screen has a <b>"Load demo content"</b> button that loads freely available sample streams, so you can explore the interface, player and settings without an account of your own.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Which devices does GlassTV run on?</summary>
+            <div class="body">
+                <p><b>iPhone, iPad, Apple TV and Mac</b>, each on system version 26 or later. The interface adapts per platform (Top Shelf and remote-friendly controls on Apple TV, a menu-bar player and keyboard controls on Mac).</p>
+                <p>Favourites, watchlist, profiles and settings can optionally sync between your devices via <b>iCloud</b> (<em>Settings → iCloud Sync</em>).</p>
+            </div>
+        </details>
+
+        <h2>Frequently asked questions</h2>
+
+        <details>
+            <summary>Only a few channels show up, or none at all</summary>
+            <div class="body">
+                <p>Almost always a filter is active. Check these in order:</p>
+                <ul>
+                    <li><b>Language filter:</b> on first launch you pick your languages. With <em>"Selected languages only"</em> enabled, everything else is hidden. Adjust under <em>Settings → Languages</em>.</li>
+                    <li><b>Categories:</b> groups can be hidden per source (<em>Settings → Sources → Categories</em>).</li>
+                    <li><b>Parental controls:</b> locked groups are invisible without the PIN.</li>
+                    <li><b>Profile:</b> favourites and watchlist are per profile — make sure the right one is active.</li>
+                </ul>
+                <p>If none of that helps, refresh the source manually (<em>Settings → Sources → Refresh</em>).</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>A channel won't load or shows a black screen</summary>
+            <div class="body">
+                <p>GlassTV automatically tries several routes and falls back to its second playback engine (VLC) if needed. If it stays black, the cause is usually on the source side:</p>
+                <ul>
+                    <li><b>Connection limit:</b> many providers allow only one or two simultaneous streams. Stop playback on your other devices.</li>
+                    <li><b>Dead link:</b> test the same channel in another player — if nothing plays there either, the URL is broken at the provider.</li>
+                    <li><b>Different network:</b> some providers block mobile data or certain regions. Try Wi-Fi or your home network.</li>
+                    <li><b>Audio but no picture:</b> happens with unusual codecs. Open the player options and switch quality or audio track.</li>
+                </ul>
+            </div>
+        </details>
+
+        <details>
+            <summary>MKV movies stutter or won't start</summary>
+            <div class="body">
+                <p>Apple's built-in player fundamentally cannot play MKV. GlassTV detects this and automatically switches to the VLC engine for <code>.mkv</code>, <code>.avi</code>, <code>.ts</code> and similar formats — playback resumes at your last position.</p>
+                <p>If it still stutters, the bitrate is usually too high for your connection. Pick a lower-quality variant from your provider if one exists.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>The TV guide (EPG) is empty or shows wrong times</summary>
+            <div class="body">
+                <ul>
+                    <li><b>Empty:</b> for M3U sources the <b>XMLTV URL</b> must be entered separately (<em>Settings → Sources → EPG</em>). Without it there is no programme data.</li>
+                    <li><b>Only some channels have data:</b> the playlist's channel IDs (<code>tvg-id</code>) don't match the EPG file. Only your provider can fix that.</li>
+                    <li><b>Everything shifted by hours:</b> set the <b>time offset</b> for that source (<em>Settings → Sources → EPG offset</em>), e.g. −60 or +60 minutes.</li>
+                </ul>
+                <p>Inside the guide, the location button jumps back to the current time at any point.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Series are empty or appear twice</summary>
+            <div class="body">
+                <p>Some Xtream panels return the same series multiple times, one of them without episodes. GlassTV merges these duplicates automatically and loads the episodes from the populated entry when needed.</p>
+                <p>If a series still stays empty, open it again or refresh the source. If your provider supplies no episode data, the app cannot show any.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Can I create profiles for my family?</summary>
+            <div class="body">
+                <p>Yes, up to five. Each profile has its own favourites, watchlist, history and recommendations; sources and settings stay shared. Profile pictures can come from your photo library or be set as a symbol.</p>
+                <p>There are also <b>parental controls</b> with a PIN that let you hide entire categories.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>Is my data stored anywhere?</summary>
+            <div class="body">
+                <p>No. Playlists, credentials, history and settings stay locally on your device. There is no tracking, no advertising and no server of ours that receives your data — the app only connects to the addresses you enter yourself.</p>
+                <p>If you enable iCloud Sync, your settings are synced through your own private iCloud key-value store between your devices. We have no access to that either.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>How do I back up my setup?</summary>
+            <div class="body">
+                <p>Under <em>Settings → Backup</em> you can export your sources, favourites, lists and settings to a file and restore them on another device. Handy when switching devices or before bigger changes.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>I found a bug or have a request</summary>
+            <div class="body">
+                <p>Please send it over to <a href="mailto:kontakt@witting.info?subject=GlassTV%20Feedback">kontakt@witting.info</a>. It helps to include:</p>
+                <ul>
+                    <li>Device and system version (e.g. iPhone 16 Pro, iOS 26.1)</li>
+                    <li>App version (shown at the bottom of Settings)</li>
+                    <li>Type of source (M3U or Xtream)</li>
+                    <li>What you did and what happened instead</li>
+                </ul>
+                <p>Please do <b>not</b> include credentials or playlist URLs — we don't need them to investigate.</p>
+            </div>
+        </details>
+    </div>
+    </main>
+
+    <footer>
+        <span data-lang="de">© 2026 witting.info · <a href="https://witting.info">Startseite</a></span>
+        <span data-lang="en">© 2026 witting.info · <a href="https://witting.info">Home</a></span>
+        <span><a href="mailto:kontakt@witting.info">kontakt@witting.info</a></span>
+    </footer>
+</div>
+
+<script>
+    (function () {
+        var html = document.documentElement;
+        var saved = null;
+        try { saved = localStorage.getItem('gtv-lang'); } catch (e) {}
+        var initial = saved || (navigator.language && navigator.language.toLowerCase().indexOf('de') === 0 ? 'de' : 'en');
+        set(initial);
+        document.querySelectorAll('.lang button').forEach(function (b) {
+            b.addEventListener('click', function () { set(b.dataset.set); });
+        });
+        function set(lang) {
+            if (lang !== 'de' && lang !== 'en') lang = 'de';
+            html.setAttribute('data-active', lang);
+            html.setAttribute('lang', lang);
+            document.querySelectorAll('.lang button').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.set === lang);
+            });
+            try { localStorage.setItem('gtv-lang', lang); } catch (e) {}
+        }
+    })();
+</script>
+</body>
+</html>
