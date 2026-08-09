@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlassTV — dein IPTV-Player für iPhone und iPad</title>
+<meta name="description" content="GlassTV spielt deine eigene M3U-Playlist oder deinen Xtream-Zugang ab: Programmführer, Serien mit Weiterschauen, Profile, Kindersicherung und 22 Designs. Gratis, ohne Werbung, ohne Tracking.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://witting.info/glasstv/">
+<link rel="icon" href="/glasstv/icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/glasstv/apple-touch-icon.png">
+<meta name="theme-color" content="#0a0912">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GlassTV — dein IPTV-Player für iPhone und iPad">
+<meta property="og:description" content="Deine eigene Playlist, endlich schön: Programmführer, Weiterschauen, Profile und 22 Designs. Gratis, ohne Werbung, ohne Tracking.">
+<meta property="og:url" content="https://witting.info/glasstv/">
+<meta property="og:image" content="https://witting.info/glasstv/icon.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+    :root {
+        --bg: #0a0912;
+        --bg-soft: #100e1c;
+        --surface: rgba(255, 255, 255, 0.045);
+        --surface-strong: #161423;
+        --text: #f5f4fb;
+        --text-secondary: #b3b0c4;
+        --text-tertiary: #8a879c;
+        --border: rgba(255, 255, 255, 0.10);
+        --border-soft: rgba(255, 255, 255, 0.06);
+        --accent: #8b7ae8;
+        --accent-bright: #a78bfa;
+        --accent-soft: rgba(139, 122, 232, 0.16);
+        --radius: 22px;
+        --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.55);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: var(--accent-bright); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .ambient span { position: absolute; border-radius: 50%; filter: blur(110px); opacity: 0.42; }
+    .ambient span:nth-child(1) { width: 620px; height: 620px; top: -240px; left: -180px; background: radial-gradient(circle, #7c6ce0, transparent 70%); }
+    .ambient span:nth-child(2) { width: 520px; height: 520px; top: 34%; right: -220px; background: radial-gradient(circle, #6366f1, transparent 70%); }
+    .ambient span:nth-child(3) { width: 480px; height: 480px; bottom: -200px; left: 26%; background: radial-gradient(circle, #a855f7, transparent 70%); opacity: 0.30; }
+
+    .skip-link {
+        position: absolute; left: 16px; top: -60px;
+        background: var(--surface-strong); color: var(--text);
+        border: 1px solid var(--border); border-radius: 10px;
+        padding: 10px 16px; font-weight: 600;
+        z-index: 20; transition: top .2s ease;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- Navigation ---------- */
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; }
+    .brand { display: flex; align-items: center; gap: 11px; color: var(--text); font-weight: 700; font-size: 1.05rem; }
+    .brand:hover { text-decoration: none; }
+    .brand img { width: 34px; height: 34px; border-radius: 9px; }
+    .nav-links { display: flex; gap: 6px; align-items: center; }
+    .nav-links a {
+        color: var(--text-secondary); font-size: 0.92rem; font-weight: 500;
+        padding: 8px 14px; border-radius: 100px; transition: all .2s ease;
+    }
+    .nav-links a:hover { background: rgba(255,255,255,0.06); color: var(--text); text-decoration: none; }
+
+    /* ---------- Sprachumschalter ---------- */
+    .lang {
+        display: inline-flex; background: var(--surface); border: 1px solid var(--border);
+        border-radius: 100px; padding: 3px; margin-left: 6px; flex-shrink: 0;
+    }
+    .lang button {
+        border: 0; background: transparent; color: var(--text-tertiary);
+        font: inherit; font-size: 0.8rem; font-weight: 600;
+        padding: 5px 12px; border-radius: 100px; cursor: pointer;
+        transition: all .2s ease;
+    }
+    .lang button:hover { color: var(--text); }
+    .lang button.active { background: var(--accent); color: #12101f; }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+        font-weight: 600; font-size: 1rem; padding: 15px 28px; border-radius: 100px;
+        transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease;
+        white-space: nowrap;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-2px); }
+    .btn-primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+        color: #12101f; box-shadow: 0 14px 40px rgba(139, 122, 232, 0.34);
+    }
+    .btn-primary:hover { box-shadow: 0 20px 52px rgba(167, 139, 250, 0.44); }
+    .btn-primary svg { width: 20px; height: 20px; fill: currentColor; }
+    .btn-primary .stack { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; }
+    .btn-primary .stack small { font-size: 0.68rem; font-weight: 600; opacity: 0.72; letter-spacing: 0.02em; }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.22); }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 56px 0 40px; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+
+    .badge {
+        display: inline-flex; align-items: center; gap: 9px;
+        background: var(--accent-soft); color: var(--accent-bright);
+        border: 1px solid rgba(139,122,232,0.28);
+        padding: 7px 15px; border-radius: 100px;
+        font-size: 0.83rem; font-weight: 600; margin-bottom: 26px;
+    }
+    .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-bright); }
+
+    .hero h1 {
+        font-size: clamp(2.5rem, 5.6vw, 4.1rem);
+        font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px;
+    }
+    .hero h1 em {
+        font-style: normal;
+        background: linear-gradient(100deg, var(--accent-bright), #c4b5fd, #818cf8);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub { font-size: 1.14rem; color: var(--text-secondary); max-width: 480px; margin-bottom: 32px; }
+    .hero-cta { display: flex; gap: 13px; flex-wrap: wrap; margin-bottom: 26px; }
+    .hero-facts { display: flex; gap: 20px; flex-wrap: wrap; color: var(--text-tertiary); font-size: 0.88rem; font-weight: 500; }
+    .hero-facts span.fact { display: inline-flex; align-items: center; gap: 7px; }
+    .hero-facts svg { width: 15px; height: 15px; stroke: var(--accent-bright); fill: none; stroke-width: 2.4; flex-shrink: 0; }
+
+    /* ---------- Telefon-Rahmen ---------- */
+    .phone {
+        position: relative; margin: 0 auto; max-width: 320px;
+        border-radius: 46px; padding: 9px;
+        background: linear-gradient(160deg, #33304a, #161423 55%, #2a2740);
+        box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.07);
+    }
+    /* Die Screenshots bringen Statusleiste und Dynamic Island selbst mit –
+       der Rahmen zeichnet deshalb bewusst keine eigene Aussparung. */
+    .phone img { border-radius: 38px; width: 100%; }
+    .hero-phone { animation: float 9s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+    /* ---------- Abschnitte ---------- */
+    section { padding: 76px 0; }
+    .section-head { max-width: 620px; margin-bottom: 46px; }
+    .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .eyebrow {
+        display: inline-block; font-size: 0.76rem; font-weight: 700;
+        letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--accent-bright); background: var(--accent-soft);
+        padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 14px; }
+    .section-head p { color: var(--text-secondary); font-size: 1.06rem; }
+
+    /* ---------- BYOC-Hinweis ---------- */
+    .byoc {
+        background: linear-gradient(135deg, rgba(139,122,232,0.13), rgba(99,102,241,0.07));
+        border: 1px solid rgba(139,122,232,0.24);
+        border-radius: var(--radius); padding: 30px 32px;
+        display: flex; gap: 22px; align-items: flex-start;
+    }
+    .byoc .icon {
+        width: 46px; height: 46px; border-radius: 13px; flex-shrink: 0;
+        background: var(--accent-soft); display: flex; align-items: center; justify-content: center;
+    }
+    .byoc .icon svg { width: 24px; height: 24px; stroke: var(--accent-bright); fill: none; stroke-width: 1.8; }
+    .byoc h3 { font-size: 1.16rem; font-weight: 700; margin-bottom: 8px; }
+    .byoc p { color: var(--text-secondary); font-size: 0.98rem; }
+
+    /* ---------- Screenshot-Galerie ---------- */
+    .gallery {
+        display: flex; gap: 22px; overflow-x: auto; padding: 4px 24px 26px;
+        scroll-snap-type: x mandatory; margin: 0 -24px;
+        scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.18) transparent;
+    }
+    .gallery::-webkit-scrollbar { height: 8px; }
+    .gallery::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.16); border-radius: 100px; }
+    .shot { flex: 0 0 232px; scroll-snap-align: center; }
+    .shot .phone { max-width: 232px; border-radius: 34px; padding: 7px; }
+    .shot .phone img { border-radius: 28px; }
+    .shot figcaption { margin-top: 18px; text-align: center; }
+    .shot figcaption b { display: block; font-size: 0.98rem; font-weight: 600; }
+    .shot figcaption span.sub { display: block; margin-top: 3px; font-size: 0.86rem; color: var(--text-tertiary); }
+
+    /* ---------- Funktionen ---------- */
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .feature {
+        background: var(--surface); border: 1px solid var(--border-soft);
+        border-radius: var(--radius); padding: 28px;
+        transition: border-color .3s ease, transform .3s cubic-bezier(.2,.8,.2,1), background .3s ease;
+    }
+    .feature:hover { border-color: rgba(139,122,232,0.38); transform: translateY(-4px); background: rgba(255,255,255,0.065); }
+    .feature .tile {
+        width: 44px; height: 44px; border-radius: 13px; margin-bottom: 18px;
+        background: var(--accent-soft); display: flex; align-items: center; justify-content: center;
+    }
+    .feature .tile svg { width: 22px; height: 22px; stroke: var(--accent-bright); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .feature h3 { font-size: 1.08rem; font-weight: 650; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .feature p { color: var(--text-secondary); font-size: 0.94rem; line-height: 1.6; }
+
+    /* ---------- iPad ---------- */
+    .ipad-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 52px; align-items: center; }
+    .ipad-frame {
+        border-radius: 28px; padding: 12px;
+        background: linear-gradient(160deg, #33304a, #161423 55%, #2a2740);
+        box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.07);
+    }
+    .ipad-frame img { border-radius: 18px; }
+    .ipad-copy ul { list-style: none; margin-top: 22px; }
+    .ipad-copy li { display: flex; gap: 11px; margin-bottom: 13px; color: var(--text-secondary); font-size: 0.99rem; }
+    .ipad-copy li svg { width: 19px; height: 19px; stroke: var(--accent-bright); fill: none; stroke-width: 2.4; flex-shrink: 0; margin-top: 4px; }
+
+    /* ---------- Demnächst ---------- */
+    .soon-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+    .soon {
+        background: var(--surface); border: 1px solid var(--border-soft);
+        border-radius: var(--radius); padding: 26px; overflow: hidden;
+    }
+    .soon .screen {
+        border-radius: 12px; overflow: hidden; margin-bottom: 22px;
+        border: 1px solid var(--border-soft); box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+    .soon .tag {
+        display: inline-block; font-size: 0.72rem; font-weight: 700;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        color: var(--accent-bright); background: var(--accent-soft);
+        border-radius: 100px; padding: 4px 11px; margin-bottom: 11px;
+    }
+    .soon h3 { font-size: 1.14rem; font-weight: 650; margin-bottom: 7px; }
+    .soon p { color: var(--text-secondary); font-size: 0.94rem; }
+
+    /* ---------- Privatsphäre ---------- */
+    .privacy {
+        background: var(--surface); border: 1px solid var(--border-soft);
+        border-radius: var(--radius); padding: 44px 40px; text-align: center;
+    }
+    .privacy h2 { margin-bottom: 12px; }
+    .privacy > p { color: var(--text-secondary); max-width: 560px; margin: 0 auto 30px; }
+    .privacy-points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: left; }
+    .privacy-points div.point { background: rgba(255,255,255,0.04); border: 1px solid var(--border-soft); border-radius: 16px; padding: 20px; }
+    .privacy-points b { display: block; font-size: 0.99rem; margin-bottom: 5px; }
+    .privacy-points small { color: var(--text-tertiary); font-size: 0.88rem; line-height: 1.55; display: block; }
+    .privacy .fine { margin-top: 26px; margin-bottom: 0; font-size: 0.94rem; }
+
+    /* ---------- Abschluss-CTA ---------- */
+    .final { text-align: center; padding: 90px 0 70px; }
+    .final img.appicon { width: 92px; height: 92px; border-radius: 22px; margin: 0 auto 26px; box-shadow: var(--shadow-lg); }
+    .final h2 { margin-bottom: 12px; }
+    .final p { color: var(--text-secondary); margin-bottom: 30px; }
+    .final .hero-cta { justify-content: center; }
+
+    /* ---------- Footer ---------- */
+    footer {
+        border-top: 1px solid var(--border-soft); padding: 34px 0 52px;
+        display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between;
+        color: var(--text-tertiary); font-size: 0.88rem;
+    }
+    footer a { color: var(--text-secondary); }
+    footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+    /* ---------- Zweisprachigkeit ---------- */
+    [data-lang] { display: none; }
+    html[data-active="de"] [data-lang="de"] { display: revert; }
+    html[data-active="en"] [data-lang="en"] { display: revert; }
+    /* Blockelemente behalten ihre Anzeigeart, damit Flex/Grid nicht bricht */
+    html[data-active="de"] div[data-lang="de"], html[data-active="en"] div[data-lang="en"] { display: block; }
+    html[data-active="de"] li[data-lang="de"], html[data-active="en"] li[data-lang="en"] { display: flex; }
+    html[data-active="de"] span.fact[data-lang="de"], html[data-active="en"] span.fact[data-lang="en"] { display: inline-flex; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+        .hero-grid { grid-template-columns: 1fr; gap: 44px; }
+        .hero { padding: 34px 0 20px; }
+        .features { grid-template-columns: repeat(2, 1fr); }
+        .ipad-grid { grid-template-columns: 1fr; gap: 36px; }
+        .privacy-points { grid-template-columns: 1fr; }
+        .soon-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px) {
+        section { padding: 56px 0; }
+        .features { grid-template-columns: 1fr; }
+        .nav-links a { display: none; }
+        .nav-links a.nav-store { display: inline-flex; }
+        .byoc { flex-direction: column; gap: 16px; padding: 26px 24px; }
+        .privacy { padding: 34px 22px; }
+        .hero-cta .btn { flex: 1 1 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+        html { scroll-behavior: auto; }
+    }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" data-lang="de">Zum Inhalt springen</a>
+<a class="skip-link" href="#main" data-lang="en">Skip to content</a>
+<div class="ambient" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<div class="wrap">
+    <div class="nav">
+        <a class="brand" href="/glasstv/">
+            <img src="/glasstv/icon.png" width="34" height="34" alt="">
+            GlassTV
+        </a>
+        <nav class="nav-links">
+            <a href="#funktionen"><span data-lang="de">Funktionen</span><span data-lang="en">Features</span></a>
+            <a href="#demnaechst"><span data-lang="de">Demnächst</span><span data-lang="en">Coming up</span></a>
+            <a href="/glasstv/support/">Support</a>
+            <a href="/glasstv/datenschutz/"><span data-lang="de">Datenschutz</span><span data-lang="en">Privacy</span></a>
+            <a class="nav-store" href="https://apps.apple.com/de/app/glasstv/id6792482026"><span data-lang="de">Laden</span><span data-lang="en">Get it</span></a>
+            <div class="lang" role="group" aria-label="Sprache / Language">
+                <button type="button" data-set="de" class="active">DE</button>
+                <button type="button" data-set="en">EN</button>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<main id="main">
+
+<!-- ==================== Hero ==================== -->
+<div class="wrap">
+    <div class="hero">
+        <div class="hero-grid">
+            <div>
+                <span class="badge">
+                    <span class="dot"></span>
+                    <span data-lang="de">Gratis im App Store</span>
+                    <span data-lang="en">Free on the App Store</span>
+                </span>
+                <h1>
+                    <span data-lang="de">Deine Playlist,<br><em>endlich schön.</em></span>
+                    <span data-lang="en">Your playlist,<br><em>finally beautiful.</em></span>
+                </h1>
+                <p class="hero-sub">
+                    <span data-lang="de">
+                        GlassTV verwandelt deine eigene M3U-Playlist oder deinen Xtream-Zugang in einen
+                        aufgeräumten Player mit Programmführer, Weiterschauen und Empfehlungen –
+                        für iPhone und iPad, demnächst auch für Apple TV und Mac.
+                    </span>
+                    <span data-lang="en">
+                        GlassTV turns your own M3U playlist or Xtream account into an uncluttered player
+                        with a TV guide, resume playback and recommendations — for iPhone and iPad,
+                        with Apple TV and Mac coming soon.
+                    </span>
+                </p>
+                <div class="hero-cta">
+                    <a class="btn btn-primary" href="https://apps.apple.com/de/app/glasstv/id6792482026">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.94c-.03-2.62 2.14-3.88 2.24-3.94-1.22-1.79-3.12-2.03-3.79-2.06-1.61-.16-3.15.95-3.97.95-.82 0-2.08-.93-3.42-.9-1.76.03-3.38 1.02-4.29 2.6-1.83 3.17-.47 7.86 1.31 10.43.87 1.26 1.91 2.67 3.28 2.62 1.32-.05 1.81-.85 3.4-.85 1.59 0 2.04.85 3.43.82 1.42-.02 2.31-1.28 3.17-2.55 1-1.46 1.41-2.88 1.44-2.95-.03-.01-2.77-1.06-2.8-4.21zM14.5 5.4c.72-.88 1.21-2.1 1.08-3.32-1.04.04-2.3.69-3.05 1.57-.67.77-1.25 2.01-1.09 3.2 1.16.09 2.34-.59 3.06-1.45z"/></svg>
+                        <span class="stack">
+                            <small><span data-lang="de">Laden im</span><span data-lang="en">Download on the</span></small>App Store
+                        </span>
+                    </a>
+                    <a class="btn btn-secondary" href="#funktionen">
+                        <span data-lang="de">Funktionen ansehen</span>
+                        <span data-lang="en">See what it does</span>
+                    </a>
+                </div>
+                <div class="hero-facts">
+                    <span class="fact" data-lang="de"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Keine Werbung</span>
+                    <span class="fact" data-lang="de"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Kein Tracking</span>
+                    <span class="fact" data-lang="de"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Kein Abo</span>
+                    <span class="fact" data-lang="en"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> No ads</span>
+                    <span class="fact" data-lang="en"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> No tracking</span>
+                    <span class="fact" data-lang="en"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> No subscription</span>
+                </div>
+            </div>
+            <div class="hero-phone">
+                <div class="phone">
+                    <img src="/glasstv/shots/1-start.jpg" width="640" height="1390" alt="Die Startseite von GlassTV mit einem großen Vorschaubild und Empfehlungsregalen">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== BYOC ==================== -->
+<div class="wrap">
+    <section style="padding-top: 40px;">
+        <div class="byoc">
+            <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18.5" cy="17" r="2.5"/></svg>
+            </div>
+            <div>
+                <h3>
+                    <span data-lang="de">Du bringst deine eigene Quelle mit</span>
+                    <span data-lang="en">You bring your own source</span>
+                </h3>
+                <p>
+                    <span data-lang="de">
+                        GlassTV enthält selbst keine Sender, Filme oder Serien und verkauft keine Abos.
+                        Die App ist ein Abspieler – vergleichbar mit einem Videoplayer. Alles, was du siehst,
+                        stammt aus der M3U-Playlist oder dem Xtream-Zugang, den du selbst einträgst.
+                        Noch keinen Zugang? Ein Tipp auf „Demo-Inhalte laden“ zeigt dir die App mit frei
+                        verfügbaren Beispielstreams.
+                    </span>
+                    <span data-lang="en">
+                        GlassTV contains no channels, movies or series of its own and sells no subscriptions.
+                        The app is a player — think of it like a video player. Everything you see comes from
+                        the M3U playlist or Xtream account you enter yourself. Don't have one yet? Tapping
+                        “Load demo content” shows you the app running on freely available sample streams.
+                    </span>
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== Screenshots ==================== -->
+<div class="wrap">
+    <section id="einblicke">
+        <div class="section-head center">
+            <span class="eyebrow"><span data-lang="de">Einblicke</span><span data-lang="en">A look inside</span></span>
+            <h2>
+                <span data-lang="de">Ein Blick in die App</span>
+                <span data-lang="en">A look inside the app</span>
+            </h2>
+            <p>
+                <span data-lang="de">Sechs Ansichten aus GlassTV – zum Wischen.</span>
+                <span data-lang="en">Six views from GlassTV — swipe through them.</span>
+            </p>
+        </div>
+        <div class="gallery">
+            <figure class="shot">
+                <div class="phone"><img src="/glasstv/shots/1-start.jpg" width="640" height="1390" alt="Startseite mit Vorschaubild und einem Empfehlungsregal" loading="lazy"></div>
+                <figcaption>
+                    <b><span data-lang="de">Startseite</span><span data-lang="en">Home</span></b>
+                    <span class="sub" data-lang="de">Empfehlungen aus deinem Verlauf</span>
+                    <span class="sub" data-lang="en">Recommendations from your history</span>
+                </figcaption>
+            </figure>
+            <figure class="shot">
+                <div class="phone"><img src="/glasstv/shots/2-livetv.jpg" width="640" height="1390" alt="Live-TV-Liste mit Sendern, laufender Sendung und Fortschrittsbalken" loading="lazy"></div>
+                <figcaption>
+                    <b>Live TV</b>
+                    <span class="sub" data-lang="de">Läuft jetzt, kommt als Nächstes</span>
+                    <span class="sub" data-lang="en">On now, up next</span>
+                </figcaption>
+            </figure>
+            <figure class="shot">
+                <div class="phone"><img src="/glasstv/shots/3-programmfuehrer.jpg" width="640" height="1390" alt="Programmführer als Zeitraster über mehrere Sender" loading="lazy"></div>
+                <figcaption>
+                    <b><span data-lang="de">Programmführer</span><span data-lang="en">TV guide</span></b>
+                    <span class="sub" data-lang="de">Zeitraster mit Erinnerungen</span>
+                    <span class="sub" data-lang="en">Timeline grid with reminders</span>
+                </figcaption>
+            </figure>
+            <figure class="shot">
+                <div class="phone"><img src="/glasstv/shots/4-filme.jpg" width="640" height="1390" alt="Filmübersicht als Raster mit Covern" loading="lazy"></div>
+                <figcaption>
+                    <b><span data-lang="de">Filme &amp; Serien</span><span data-lang="en">Movies &amp; series</span></b>
+                    <span class="sub" data-lang="de">Cover-Raster mit Weiterschauen</span>
+                    <span class="sub" data-lang="en">Poster grid with resume</span>
+                </figcaption>
+            </figure>
+            <figure class="shot">
+                <div class="phone"><img src="/glasstv/shots/5-designs.jpg" width="640" height="1390" alt="Design-Auswahl mit Vorschaukacheln und Akzentfarben" loading="lazy"></div>
+                <figcaption>
+                    <b><span data-lang="de">22 Designs</span><span data-lang="en">22 themes</span></b>
+                    <span class="sub" data-lang="de">Plus eigene Akzentfarbe</span>
+                    <span class="sub" data-lang="en">Plus your own accent colour</span>
+                </figcaption>
+            </figure>
+            <figure class="shot">
+                <div class="phone"><img src="/glasstv/shots/6-player.jpg" width="640" height="1390" alt="Player im Vollbild mit Steuerelementen am unteren Rand" loading="lazy"></div>
+                <figcaption>
+                    <b>Player</b>
+                    <span class="sub" data-lang="de">Zoom, Spulen, Sleep-Timer</span>
+                    <span class="sub" data-lang="en">Zoom, seek, sleep timer</span>
+                </figcaption>
+            </figure>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== Funktionen ==================== -->
+<div class="wrap">
+    <section id="funktionen">
+        <div class="section-head center">
+            <span class="eyebrow"><span data-lang="de">Funktionen</span><span data-lang="en">Features</span></span>
+            <h2>
+                <span data-lang="de">Alles drin, nichts im Weg</span>
+                <span data-lang="en">Everything in, nothing in the way</span>
+            </h2>
+            <p>
+                <span data-lang="de">Von der Playlist bis zum Sleep-Timer – ohne Konto, ohne Abo, ohne Werbung.</span>
+                <span data-lang="en">From playlist to sleep timer — no account, no subscription, no ads.</span>
+            </p>
+        </div>
+        <div class="features">
+            <div class="feature">
+                <div class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h9"/><path d="M18 14l4 3-4 3z"/></svg></div>
+                <h3><span data-lang="de">M3U &amp; Xtream</span><span data-lang="en">M3U &amp; Xtream</span></h3>
+                <p>
+                    <span data-lang="de">Playlist-URL einfügen oder Xtream-Zugangsdaten eintragen – Sender, Filme und Serien landen inklusive Kategorien in der App. Beliebig viele Quellen parallel.</span>
+                    <span data-lang="en">Paste a playlist URL or enter your Xtream credentials — channels, movies and series arrive complete with categories. Add as many sources as you like.</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M11 13h6"/></svg></div>
+                <h3><span data-lang="de">Programmführer</span><span data-lang="en">TV guide</span></h3>
+                <p>
+                    <span data-lang="de">XMLTV-EPG als Zeitraster über alle Sender, mit Suche, Erinnerungen fünf Minuten vor Sendungsbeginn und einem Zeitversatz pro Quelle.</span>
+                    <span data-lang="en">XMLTV EPG as a timeline across every channel, with search, reminders five minutes before a programme starts and a per-source time offset.</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v6l4-2"/><circle cx="12" cy="13" r="8"/><path d="M12 10v3l2 1.5"/></svg></div>
+                <h3><span data-lang="de">Weiterschauen</span><span data-lang="en">Resume playback</span></h3>
+                <p>
+                    <span data-lang="de">Jeder Film und jede Folge merkt sich die Position. Die nächste Episode startet auf Wunsch automatisch, Fortschrittsbalken zeigen dir, wo du stehst.</span>
+                    <span data-lang="en">Every movie and episode remembers where you stopped. The next episode can start automatically, and progress bars show you how far you got.</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 5.4 5.6.6-4.2 3.8 1.2 5.7L12 15.6 7 18.5l1.2-5.7L4 9l5.6-.6z"/></svg></div>
+                <h3><span data-lang="de">Empfehlungen</span><span data-lang="en">Recommendations</span></h3>
+                <p>
+                    <span data-lang="de">Aus deinem Verlauf entstehen Regale wie „Weil du … geschaut hast“ – rein auf dem Gerät berechnet. Die Startseite stellst du dir aus acht Regalen selbst zusammen.</span>
+                    <span data-lang="en">Your history turns into shelves like “Because you watched …” — calculated entirely on your device. Build your home screen from eight shelves as you like.</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17.5" cy="9" r="2.4"/><path d="M16 14.6c3 .3 5 2.4 5 5.4"/></svg></div>
+                <h3><span data-lang="de">Profile &amp; Kindersicherung</span><span data-lang="en">Profiles &amp; parental controls</span></h3>
+                <p>
+                    <span data-lang="de">Bis zu fünf Profile mit eigenen Favoriten, Merklisten und Empfehlungen. Per PIN lassen sich einzelne Kategorien komplett ausblenden.</span>
+                    <span data-lang="en">Up to five profiles, each with its own favourites, watchlist and recommendations. A PIN can hide entire categories completely.</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="12" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M10.5 9.5l4 1.5-4 1.5z"/></svg></div>
+                <h3><span data-lang="de">Mini-Player &amp; PiP</span><span data-lang="en">Mini player &amp; PiP</span></h3>
+                <p>
+                    <span data-lang="de">Wiedergabe minimieren und weiterstöbern, frei verschiebbar und in der Größe verstellbar. Dazu Bild-in-Bild, AirPlay und Steuerung vom Sperrbildschirm.</span>
+                    <span data-lang="en">Minimise playback and keep browsing — freely movable and resizable. Plus Picture in Picture, AirPlay and lock-screen controls.</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 000 18"/><circle cx="8.5" cy="9.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="15.5" cy="9.5" r="1"/></svg></div>
+                <h3><span data-lang="de">22 Designs</span><span data-lang="en">22 themes</span></h3>
+                <p>
+                    <span data-lang="de">Hell oder dunkel, von Arktis bis Vulkan – dazu 25 Akzentfarben und eine frei wählbare eigene Farbe. „Überrasch mich“ würfelt dir eine Kombination.</span>
+                    <span data-lang="en">Light or dark, from Arctic to Volcano — plus 25 accent colours and one of your own choosing. “Surprise me” rolls a combination for you.</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v11"/><path d="M8 10.5l4 4 4-4"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></div>
+                <h3><span data-lang="de">Spielt fast alles</span><span data-lang="en">Plays nearly anything</span></h3>
+                <p>
+                    <span data-lang="de">Zwei Wiedergabe-Engines arbeiten zusammen: Was der Apple-Player nicht kann – etwa MKV – übernimmt automatisch VLC, an genau derselben Stelle.</span>
+                    <span data-lang="en">Two playback engines work together: whatever Apple's player can't handle — MKV, for instance — is picked up automatically by VLC, at exactly the same position.</span>
+                </p>
+            </div>
+            <div class="feature">
+                <div class="tile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 18a4 4 0 01-.9-7.9 5.5 5.5 0 0110.6-2.1A4.5 4.5 0 0117.5 18z"/><path d="M12 12v6"/><path d="M9.5 15.5L12 18l2.5-2.5"/></svg></div>
+                <h3><span data-lang="de">Backup &amp; iCloud</span><span data-lang="en">Backup &amp; iCloud</span></h3>
+                <p>
+                    <span data-lang="de">Einrichtung als Datei exportieren und auf dem nächsten Gerät einspielen. Optional gleicht iCloud deine Quellen und Favoriten zwischen deinen Geräten ab.</span>
+                    <span data-lang="en">Export your setup to a file and restore it on the next device. Optionally, iCloud syncs your sources and favourites between your devices.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== iPad ==================== -->
+<div class="wrap">
+    <section id="ipad">
+        <div class="ipad-grid">
+            <div class="ipad-frame">
+                <img src="/glasstv/shots/ipad.jpg" width="900" height="1200" alt="GlassTV auf dem iPad mit Seitenleiste und großem Vorschaubild" loading="lazy">
+            </div>
+            <div class="ipad-copy">
+                <span class="eyebrow"><span data-lang="de">iPhone &amp; iPad</span><span data-lang="en">iPhone &amp; iPad</span></span>
+                <h2>
+                    <span data-lang="de">Auf dem iPad mit Seitenleiste</span>
+                    <span data-lang="en">On iPad, with a sidebar</span>
+                </h2>
+                <p style="color: var(--text-secondary);">
+                    <span data-lang="de">
+                        Dieselbe App, an den größeren Bildschirm angepasst: Die Tab-Leiste wird zur
+                        Seitenleiste, Cover bekommen mehr Platz, der Programmführer zeigt mehr Stunden auf einmal.
+                    </span>
+                    <span data-lang="en">
+                        The same app, adapted to the larger screen: the tab bar becomes a sidebar, posters
+                        get more room, and the TV guide shows more hours at once.
+                    </span>
+                </p>
+                <ul>
+                    <li data-lang="de"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Ein Kauf, beide Geräte – die App ist ohnehin gratis</li>
+                    <li data-lang="de"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Favoriten und Verlauf per iCloud abgleichen</li>
+                    <li data-lang="de"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Erfordert iOS bzw. iPadOS 26 oder neuer</li>
+                    <li data-lang="en"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> One app, both devices — and it's free anyway</li>
+                    <li data-lang="en"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Sync favourites and history via iCloud</li>
+                    <li data-lang="en"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Requires iOS or iPadOS 26 or later</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== Demnächst ==================== -->
+<div class="wrap">
+    <section id="demnaechst">
+        <div class="section-head center">
+            <span class="eyebrow"><span data-lang="de">In Vorbereitung</span><span data-lang="en">In the works</span></span>
+            <h2>
+                <span data-lang="de">Bald auch auf dem großen Bildschirm</span>
+                <span data-lang="en">Coming to the big screen</span>
+            </h2>
+            <p>
+                <span data-lang="de">Fassungen für Apple TV und Mac sind fertig und liegen bei Apple zur Prüfung.</span>
+                <span data-lang="en">Versions for Apple TV and Mac are finished and currently under review at Apple.</span>
+            </p>
+        </div>
+        <div class="soon-grid">
+            <div class="soon">
+                <div class="screen">
+                    <img src="/glasstv/shots/appletv.jpg" width="1100" height="618" alt="GlassTV auf dem Apple TV mit großflächiger Startseite" loading="lazy">
+                </div>
+                <span class="tag">Apple TV</span>
+                <h3>
+                    <span data-lang="de">Fürs Sofa gebaut</span>
+                    <span data-lang="en">Built for the couch</span>
+                </h3>
+                <p>
+                    <span data-lang="de">Bedienung komplett über die Siri Remote, dazu ein Top-Shelf-Bereich, der dein Weiterschauen direkt auf dem Home-Bildschirm zeigt.</span>
+                    <span data-lang="en">Fully operable with the Siri Remote, plus a Top Shelf area that puts your continue-watching row right on the Home screen.</span>
+                </p>
+            </div>
+            <div class="soon">
+                <div class="screen">
+                    <img src="/glasstv/shots/mac.jpg" width="1100" height="687" alt="GlassTV auf dem Mac mit Seitenleiste im Fenster" loading="lazy">
+                </div>
+                <span class="tag">Mac</span>
+                <h3>
+                    <span data-lang="de">Als echtes Mac-Fenster</span>
+                    <span data-lang="en">A real Mac window</span>
+                </h3>
+                <p>
+                    <span data-lang="de">Mit Seitenleiste, Tastatursteuerung im Player und einem kleinen Player direkt in der Menüleiste – keine hochskalierte iPad-App.</span>
+                    <span data-lang="en">With a sidebar, keyboard controls in the player and a small player right in the menu bar — not a scaled-up iPad app.</span>
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== Privatsphäre ==================== -->
+<div class="wrap">
+    <section id="privatsphaere">
+        <div class="privacy">
+            <span class="eyebrow"><span data-lang="de">Privatsphäre</span><span data-lang="en">Privacy</span></span>
+            <h2>
+                <span data-lang="de">Deine Daten bleiben bei dir</span>
+                <span data-lang="en">Your data stays with you</span>
+            </h2>
+            <p>
+                <span data-lang="de">GlassTV hat keinen Server. Es gibt nichts, wohin deine Daten fließen könnten – weil es kein Ziel dafür gibt.</span>
+                <span data-lang="en">GlassTV has no server. There is nowhere for your data to go, because no such destination exists.</span>
+            </p>
+            <div class="privacy-points">
+                <div class="point" data-lang="de"><b>Kein Konto</b><small>Keine Registrierung, keine E-Mail-Adresse, kein Login. App laden, Playlist eintragen, fertig.</small></div>
+                <div class="point" data-lang="de"><b>Kein Tracking</b><small>Keine Analyse-Frameworks, keine Werbe-SDKs, keine Nutzungsprofile. Statistiken werden auf dem Gerät berechnet.</small></div>
+                <div class="point" data-lang="de"><b>Direkte Verbindung</b><small>Die App spricht ausschließlich mit den Adressen, die du selbst einträgst – ohne Umweg über uns.</small></div>
+                <div class="point" data-lang="en"><b>No account</b><small>No sign-up, no email address, no login. Install the app, add your playlist, done.</small></div>
+                <div class="point" data-lang="en"><b>No tracking</b><small>No analytics frameworks, no advertising SDKs, no usage profiles. Statistics are calculated on your device.</small></div>
+                <div class="point" data-lang="en"><b>Direct connection</b><small>The app talks only to the addresses you enter yourself — never by way of us.</small></div>
+            </div>
+            <p class="fine">
+                <span data-lang="de">Alle Einzelheiten stehen in der <a href="/glasstv/datenschutz/">Datenschutzerklärung</a>.</span>
+                <span data-lang="en">Full details are in the <a href="/glasstv/datenschutz/">privacy policy</a>.</span>
+            </p>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== Abschluss ==================== -->
+<div class="wrap">
+    <div class="final">
+        <img class="appicon" src="/glasstv/icon.png" width="92" height="92" alt="">
+        <h2>
+            <span data-lang="de">Probier es aus</span>
+            <span data-lang="en">Give it a try</span>
+        </h2>
+        <p>
+            <span data-lang="de">Gratis im App Store, für iPhone und iPad ab iOS 26.</span>
+            <span data-lang="en">Free on the App Store, for iPhone and iPad running iOS 26 or later.</span>
+        </p>
+        <div class="hero-cta">
+            <a class="btn btn-primary" href="https://apps.apple.com/de/app/glasstv/id6792482026">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.94c-.03-2.62 2.14-3.88 2.24-3.94-1.22-1.79-3.12-2.03-3.79-2.06-1.61-.16-3.15.95-3.97.95-.82 0-2.08-.93-3.42-.9-1.76.03-3.38 1.02-4.29 2.6-1.83 3.17-.47 7.86 1.31 10.43.87 1.26 1.91 2.67 3.28 2.62 1.32-.05 1.81-.85 3.4-.85 1.59 0 2.04.85 3.43.82 1.42-.02 2.31-1.28 3.17-2.55 1-1.46 1.41-2.88 1.44-2.95-.03-.01-2.77-1.06-2.8-4.21zM14.5 5.4c.72-.88 1.21-2.1 1.08-3.32-1.04.04-2.3.69-3.05 1.57-.67.77-1.25 2.01-1.09 3.2 1.16.09 2.34-.59 3.06-1.45z"/></svg>
+                <span class="stack">
+                    <small><span data-lang="de">Laden im</span><span data-lang="en">Download on the</span></small>App Store
+                </span>
+            </a>
+            <a class="btn btn-secondary" href="/glasstv/support/">
+                <span data-lang="de">Fragen? Zum Support</span>
+                <span data-lang="en">Questions? Get support</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+</main>
+
+<div class="wrap">
+    <footer>
+        <span>© 2026 witting.info · Maximilian Witting</span>
+        <nav>
+            <a href="/glasstv/support/">Support</a>
+            <a href="/glasstv/datenschutz/"><span data-lang="de">Datenschutz</span><span data-lang="en">Privacy</span></a>
+            <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>
+            <a href="https://witting.info">witting.info</a>
+        </nav>
+    </footer>
+</div>
+
+<script>
+    (function () {
+        var html = document.documentElement;
+        var saved = null;
+        try { saved = localStorage.getItem('gtv-lang'); } catch (e) {}
+        var initial = saved || (navigator.language && navigator.language.toLowerCase().indexOf('de') === 0 ? 'de' : 'en');
+        set(initial);
+        document.querySelectorAll('.lang button').forEach(function (b) {
+            b.addEventListener('click', function () { set(b.dataset.set); });
+        });
+        function set(lang) {
+            if (lang !== 'de' && lang !== 'en') lang = 'de';
+            html.setAttribute('data-active', lang);
+            html.setAttribute('lang', lang);
+            document.querySelectorAll('.lang button').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.set === lang);
+            });
+            try { localStorage.setItem('gtv-lang', lang); } catch (e) {}
+        }
+    })();
+</script>
+</body>
+</html>
