@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datenschutzerklärung – witting.info</title>
+<meta name="description" content="Datenschutzerklärung von witting.info: keine Cookies, kein Tracking, keine externen Ressourcen. Informationen zu Hosting, Kontaktaufnahme und Ihren Rechten nach DSGVO.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://witting.info/datenschutz/">
+<meta name="theme-color" content="#0ea5e9">
+<style>
+    :root {
+        --bg: #fbfbfd;
+        --surface: #ffffff;
+        --text: #0c0e14;
+        --text-secondary: #5f6470;
+        --text-tertiary: #7b8290;
+        --border: rgba(12, 14, 20, 0.08);
+        --border-soft: rgba(12, 14, 20, 0.05);
+        --accent: #0ea5e9;
+        --accent-dark: #0369a1;
+        --accent-soft: #e6f6fe;
+        --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
+        --radius: 20px;
+        --todo-bg: #fff4e5;
+        --todo-border: #f0a020;
+        --todo-text: #8a5200;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #090b12;
+            --surface: #12151f;
+            --text: #f4f6fb;
+            --text-secondary: #aeb2c0;
+            --text-tertiary: #8b90a0;
+            --border: rgba(255, 255, 255, 0.10);
+            --border-soft: rgba(255, 255, 255, 0.06);
+            --accent-dark: #7dd3fc;
+            --accent-soft: rgba(14, 165, 233, 0.12);
+            --todo-bg: rgba(240, 160, 32, 0.12);
+            --todo-border: #b97c18;
+            --todo-text: #f5c26b;
+        }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+    }
+    img, svg { display: block; max-width: 100%; height: auto; }
+
+    .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .ambient span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.30; }
+    .ambient span:nth-child(1) { width: 480px; height: 480px; top: -180px; left: -140px; background: radial-gradient(circle, #7dd3fc, transparent 70%); }
+    .ambient span:nth-child(2) { width: 420px; height: 420px; top: 30%; right: -180px; background: radial-gradient(circle, #a5b4fc, transparent 70%); }
+
+    .skip-link {
+        position: absolute; left: 16px; top: -60px;
+        background: var(--surface); color: var(--text);
+        border: 1px solid var(--border); border-radius: 10px;
+        padding: 10px 16px; font-weight: 600; text-decoration: none;
+        z-index: 10; transition: top .2s ease;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .topbar { margin-bottom: 40px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 700; }
+    .brand svg { width: 30px; height: 20px; }
+    .brand span.mark { font-size: 1.06rem; letter-spacing: -0.01em; }
+    .brand span.mark i { font-style: normal; color: var(--accent); font-weight: 500; }
+
+    .eyebrow {
+        display: inline-block; font-size: 0.78rem; font-weight: 700;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        color: var(--accent-dark); background: var(--accent-soft);
+        padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    h1 { font-size: clamp(2rem, 5vw, 2.7rem); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 10px; }
+    .updated { color: var(--text-tertiary); font-size: 0.9rem; margin-bottom: 34px; }
+
+    .callout {
+        background: var(--accent-soft); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 20px 22px; margin-bottom: 36px;
+        font-size: 1.01rem;
+    }
+    .callout strong { color: var(--accent-dark); }
+
+    section { margin-bottom: 34px; }
+    h2 { font-size: 1.28rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
+    p { color: var(--text-secondary); margin-bottom: 12px; }
+    ul { color: var(--text-secondary); padding-left: 22px; margin-bottom: 12px; }
+    li { margin-bottom: 7px; }
+    a { color: var(--accent-dark); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+    .card {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow-sm);
+        line-height: 1.85;
+    }
+    .card .label { display: block; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-tertiary); margin-bottom: 6px; font-weight: 600; }
+
+    .todo {
+        display: inline-block;
+        background: var(--todo-bg); border: 1px dashed var(--todo-border);
+        color: var(--todo-text); border-radius: 8px; padding: 1px 9px;
+        font-weight: 600; font-size: 0.94em;
+    }
+    .todo-note {
+        background: var(--todo-bg); border: 1px solid var(--todo-border);
+        border-radius: var(--radius); padding: 20px 22px; margin-bottom: 34px;
+    }
+    .todo-note b { color: var(--todo-text); display: block; margin-bottom: 6px; }
+    .todo-note p { color: var(--todo-text); margin-bottom: 0; font-size: 0.95rem; }
+
+    footer {
+        margin-top: 54px; padding-top: 26px; border-top: 1px solid var(--border-soft);
+        color: var(--text-tertiary); font-size: 0.88rem;
+        display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between;
+    }
+    footer a { color: var(--text-secondary); }
+    footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Zum Inhalt springen</a>
+<div class="ambient" aria-hidden="true"><span></span><span></span></div>
+
+<div class="wrap">
+    <div class="topbar">
+        <a class="brand" href="https://witting.info">
+            <svg viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="logoGrad" x1="0" y1="0" x2="48" y2="32" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#38bdf8"/>
+                        <stop offset="1" stop-color="#6366f1"/>
+                    </linearGradient>
+                </defs>
+                <path d="M4 26 L14 6 L24 22 L34 6 L44 26" stroke="url(#logoGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="mark">witting<i>.info</i></span>
+        </a>
+    </div>
+
+    <main id="main">
+        <span class="eyebrow">Datenschutz</span>
+        <h1>Datenschutzerklärung</h1>
+        <p class="updated">witting.info · Stand: 9. August 2026</p>
+
+        <div class="callout">
+            <strong>Kurzfassung:</strong> Diese Website setzt <strong>keine Cookies</strong>, verwendet
+            <strong>kein Tracking</strong> und lädt <strong>keine Inhalte von fremden Servern</strong> –
+            keine externen Schriftarten, keine Kartendienste, keine Videoeinbindungen. Es gibt kein
+            Kontaktformular. Beim Aufruf entstehen ausschließlich die technisch unvermeidbaren
+            Server-Protokolle beim Hoster.
+        </div>
+
+        
+
+        <section>
+            <h2>1. Verantwortlicher</h2>
+            <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+            <div class="card">
+                <span class="label">Verantwortlicher im Sinne der DSGVO</span>
+                Maximilian Witting<br>
+                Europaring 12<br>
+                40878 Ratingen<br>
+                Deutschland<br>
+                Telefon: <a href="tel:+4915128087078">+49 151 28087078</a><br>
+                E-Mail: <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>
+            </div>
+            <p style="margin-top:12px;">
+                Ein Datenschutzbeauftragter ist gesetzlich nicht zu benennen, da die Voraussetzungen
+                des § 38 BDSG nicht vorliegen.
+            </p>
+        </section>
+
+        <section>
+            <h2>2. Hosting und Server-Protokolle</h2>
+            <p>
+                Diese Website wird über <strong>GitHub Pages</strong> bereitgestellt, einen Dienst der
+                GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.
+            </p>
+            <p>
+                Beim Aufruf einer Seite verarbeitet GitHub technisch notwendige Verbindungsdaten,
+                insbesondere Ihre IP-Adresse, Datum und Uhrzeit des Zugriffs, die abgerufene Adresse,
+                den Referrer sowie Angaben zu Browser und Betriebssystem. Diese Verarbeitung ist für
+                die Auslieferung der Seite unvermeidbar und dient zugleich der Betriebssicherheit.
+                Rechtsgrundlage ist unser berechtigtes Interesse an einer sicheren und effizienten
+                Bereitstellung des Angebots nach Art. 6 Abs. 1 lit. f DSGVO.
+            </p>
+            <p>
+                Wir selbst haben auf diese Protokolldaten <strong>keinen Zugriff</strong> und erhalten
+                von GitHub keine Auswertungen darüber. Da GitHub Daten auch in den USA verarbeiten kann,
+                stützt sich die Übermittlung auf die Standardvertragsklauseln der EU-Kommission sowie
+                auf die Zertifizierung von GitHub unter dem EU-US Data Privacy Framework. Einzelheiten
+                finden Sie in der
+                <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Datenschutzerklärung von GitHub</a>.
+            </p>
+        </section>
+
+        <section>
+            <h2>3. Keine Cookies, kein Tracking</h2>
+            <p>
+                Diese Website speichert keine Cookies und legt keine Daten im lokalen Speicher Ihres
+                Browsers ab. Es kommen keine Analyse-, Statistik- oder Werbedienste zum Einsatz –
+                weder Google Analytics oder vergleichbare Werkzeuge noch Werbenetzwerke oder
+                Social-Media-Plugins. Es werden keine Nutzungsprofile erstellt.
+            </p>
+            <p>
+                Aus diesem Grund erscheint auch kein Cookie-Banner: Es gibt keine einwilligungspflichtige
+                Verarbeitung, in die eingewilligt werden müsste.
+            </p>
+        </section>
+
+        <section>
+            <h2>4. Keine externen Ressourcen</h2>
+            <p>
+                Sämtliche Bestandteile dieser Website – Schriftarten, Bilder, Skripte und Stile –
+                werden vom selben Server ausgeliefert wie die Seite selbst. Es werden insbesondere
+                <strong>keine Schriftarten von Google Fonts</strong> oder anderen Anbietern nachgeladen.
+                Dadurch wird Ihre IP-Adresse beim Seitenaufruf an keinen weiteren Dritten übertragen.
+            </p>
+        </section>
+
+        <section>
+            <h2>5. Kontaktaufnahme per E-Mail</h2>
+            <p>
+                Ein Kontaktformular gibt es auf dieser Website nicht. Wenn Sie uns per E-Mail
+                schreiben, verarbeiten wir Ihre Angaben – E-Mail-Adresse, Name sowie den Inhalt Ihrer
+                Nachricht – ausschließlich zur Bearbeitung Ihres Anliegens.
+            </p>
+            <p>
+                Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage der Anbahnung oder
+                Durchführung eines Vertrags dient, ansonsten unser berechtigtes Interesse an der
+                Beantwortung von Anfragen nach Art. 6 Abs. 1 lit. f DSGVO.
+            </p>
+            <p>
+                Wir löschen die Nachricht, sobald Ihr Anliegen abschließend bearbeitet ist und keine
+                gesetzlichen Aufbewahrungsfristen entgegenstehen. Bei geschäftlicher Korrespondenz
+                können handels- und steuerrechtliche Fristen von sechs bzw. zehn Jahren gelten.
+            </p>
+            <p>
+                Bitte beachten Sie: Der Versand unverschlüsselter E-Mails erfolgt über das offene
+                Internet. Wir können die Vertraulichkeit auf dem Übertragungsweg nicht garantieren.
+            </p>
+        </section>
+
+        <section>
+            <h2>6. Verschlüsselte Übertragung</h2>
+            <p>
+                Diese Website wird ausschließlich über eine TLS-verschlüsselte Verbindung ausgeliefert
+                (erkennbar an <code>https://</code> und dem Schlosssymbol in der Adresszeile). Damit
+                sind die Inhalte, die Sie abrufen, auf dem Übertragungsweg vor Mitlesen geschützt.
+            </p>
+        </section>
+
+        <section>
+            <h2>7. Unsere Apps</h2>
+            <p>
+                Für die von uns veröffentlichten Apps gelten eigene Datenschutzerklärungen, da dort
+                andere Verarbeitungen stattfinden als auf dieser Website:
+            </p>
+            <ul>
+                <li><a href="/glasstv/datenschutz/">Datenschutzerklärung GlassTV</a></li>
+                <li><a href="/sabnzbd/datenschutz/">Datenschutzerklärung SABnzbd Client</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>8. Ihre Rechte</h2>
+            <p>Ihnen stehen gegenüber uns folgende Rechte hinsichtlich Ihrer personenbezogenen Daten zu:</p>
+            <ul>
+                <li><strong>Auskunft</strong> darüber, ob und welche Daten wir zu Ihnen verarbeiten (Art. 15 DSGVO)</li>
+                <li><strong>Berichtigung</strong> unrichtiger oder Vervollständigung unvollständiger Daten (Art. 16 DSGVO)</li>
+                <li><strong>Löschung</strong> Ihrer Daten, soweit keine Aufbewahrungspflicht entgegensteht (Art. 17 DSGVO)</li>
+                <li><strong>Einschränkung</strong> der Verarbeitung (Art. 18 DSGVO)</li>
+                <li><strong>Datenübertragbarkeit</strong> in einem gängigen Format (Art. 20 DSGVO)</li>
+                <li><strong>Widerspruch</strong> gegen Verarbeitungen, die auf einem berechtigten Interesse beruhen (Art. 21 DSGVO)</li>
+            </ul>
+            <p>
+                Zur Ausübung genügt eine formlose Nachricht an
+                <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>.
+            </p>
+            <p>
+                Unabhängig davon steht Ihnen ein <strong>Beschwerderecht bei einer
+                Datenschutz-Aufsichtsbehörde</strong> zu (Art. 77 DSGVO). Zuständig ist die Behörde
+                Ihres gewöhnlichen Aufenthaltsorts, Ihres Arbeitsplatzes oder des Orts des
+                mutmaßlichen Verstoßes.
+            </p>
+        </section>
+
+        <section>
+            <h2>9. Änderungen dieser Erklärung</h2>
+            <p>
+                Wir passen diese Datenschutzerklärung an, wenn sich die Website oder die rechtlichen
+                Rahmenbedingungen ändern. Es gilt jeweils die an dieser Adresse abrufbare Fassung.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <span>© 2026 witting.info</span>
+        <nav>
+            <a href="https://witting.info">Startseite</a>
+            <a href="/impressum/">Impressum</a>
+            <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>
+        </nav>
+    </footer>
+</div>
+</body>
+</html>

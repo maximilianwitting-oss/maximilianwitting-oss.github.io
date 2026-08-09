@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impressum – witting.info</title>
+<meta name="description" content="Impressum und Anbieterkennzeichnung von witting.info, Maximilian Witting – IT-Dienstleistungen.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://witting.info/impressum/">
+<meta name="theme-color" content="#0ea5e9">
+<style>
+    :root {
+        --bg: #fbfbfd;
+        --surface: #ffffff;
+        --text: #0c0e14;
+        --text-secondary: #5f6470;
+        --text-tertiary: #7b8290;
+        --border: rgba(12, 14, 20, 0.08);
+        --border-soft: rgba(12, 14, 20, 0.05);
+        --accent: #0ea5e9;
+        --accent-dark: #0369a1;
+        --accent-soft: #e6f6fe;
+        --accent2: #6366f1;
+        --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
+        --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.08);
+        --radius: 20px;
+        --todo-bg: #fff4e5;
+        --todo-border: #f0a020;
+        --todo-text: #8a5200;
+    }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg: #090b12;
+            --surface: #12151f;
+            --text: #f4f6fb;
+            --text-secondary: #aeb2c0;
+            --text-tertiary: #8b90a0;
+            --border: rgba(255, 255, 255, 0.10);
+            --border-soft: rgba(255, 255, 255, 0.06);
+            --accent-dark: #7dd3fc;
+            --accent-soft: rgba(14, 165, 233, 0.12);
+            --todo-bg: rgba(240, 160, 32, 0.12);
+            --todo-border: #b97c18;
+            --todo-text: #f5c26b;
+        }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+    }
+    img, svg { display: block; max-width: 100%; height: auto; }
+
+    .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .ambient span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.30; }
+    .ambient span:nth-child(1) { width: 480px; height: 480px; top: -180px; left: -140px; background: radial-gradient(circle, #7dd3fc, transparent 70%); }
+    .ambient span:nth-child(2) { width: 420px; height: 420px; top: 30%; right: -180px; background: radial-gradient(circle, #a5b4fc, transparent 70%); }
+
+    .skip-link {
+        position: absolute; left: 16px; top: -60px;
+        background: var(--surface); color: var(--text);
+        border: 1px solid var(--border); border-radius: 10px;
+        padding: 10px 16px; font-weight: 600; text-decoration: none;
+        z-index: 10; transition: top .2s ease;
+    }
+    .skip-link:focus { top: 16px; }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .topbar { margin-bottom: 40px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 700; }
+    .brand svg { width: 30px; height: 20px; }
+    .brand span.mark { font-size: 1.06rem; letter-spacing: -0.01em; }
+    .brand span.mark i { font-style: normal; color: var(--accent); font-weight: 500; }
+
+    .eyebrow {
+        display: inline-block; font-size: 0.78rem; font-weight: 700;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        color: var(--accent-dark); background: var(--accent-soft);
+        padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    h1 { font-size: clamp(2rem, 5vw, 2.7rem); font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 10px; }
+    .updated { color: var(--text-tertiary); font-size: 0.9rem; margin-bottom: 36px; }
+
+    section { margin-bottom: 34px; }
+    h2 { font-size: 1.28rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
+    h3 { font-size: 1.02rem; font-weight: 650; margin: 18px 0 6px; }
+    p { color: var(--text-secondary); margin-bottom: 12px; }
+    ul { color: var(--text-secondary); padding-left: 22px; margin-bottom: 12px; }
+    li { margin-bottom: 7px; }
+    a { color: var(--accent-dark); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+
+    .card {
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: var(--radius); padding: 24px 26px; box-shadow: var(--shadow-sm);
+        line-height: 1.85;
+    }
+    .card .label { display: block; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-tertiary); margin-bottom: 6px; font-weight: 600; }
+
+
+    footer {
+        margin-top: 54px; padding-top: 26px; border-top: 1px solid var(--border-soft);
+        color: var(--text-tertiary); font-size: 0.88rem;
+        display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between;
+    }
+    footer a { color: var(--text-secondary); }
+    footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Zum Inhalt springen</a>
+<div class="ambient" aria-hidden="true"><span></span><span></span></div>
+
+<div class="wrap">
+    <div class="topbar">
+        <a class="brand" href="https://witting.info">
+            <svg viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="logoGrad" x1="0" y1="0" x2="48" y2="32" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#38bdf8"/>
+                        <stop offset="1" stop-color="#6366f1"/>
+                    </linearGradient>
+                </defs>
+                <path d="M4 26 L14 6 L24 22 L34 6 L44 26" stroke="url(#logoGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="mark">witting<i>.info</i></span>
+        </a>
+    </div>
+
+    <main id="main">
+        <span class="eyebrow">Impressum</span>
+        <h1>Impressum</h1>
+        <p class="updated">Angaben gemäß § 5 DDG</p>
+
+
+        <section>
+            <h2>Diensteanbieter</h2>
+            <div class="card">
+                <span class="label">Anbieter</span>
+                Maximilian Witting<br>
+                Europaring 12<br>
+                40878 Ratingen<br>
+                Deutschland
+            </div>
+        </section>
+
+        <section>
+            <h2>Kontakt</h2>
+            <div class="card">
+                <span class="label">Erreichbarkeit</span>
+                Telefon: <a href="tel:+4915128087078">+49 151 28087078</a><br>
+                E-Mail: <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>
+            </div>
+            <p style="margin-top:12px; font-size:0.94rem;">
+                Das DDG verlangt neben der E-Mail-Adresse einen zweiten Weg, über den eine
+                schnelle Kontaktaufnahme möglich ist. In der Regel ist das eine Telefonnummer.
+            </p>
+        </section>
+
+        <section>
+            <h2>Umsatzsteuer</h2>
+            <div class="card">
+                <span class="label">Kleinunternehmerregelung</span>
+                Gemäß § 19 UStG wird keine Umsatzsteuer berechnet und daher auch keine
+                Umsatzsteuer-Identifikationsnummer geführt.
+            </div>
+        </section>
+
+        <section>
+            <h2>Redaktionell verantwortlich</h2>
+            <div class="card">
+                <span class="label">Gemäß § 18 Abs. 2 MStV</span>
+                Maximilian Witting<br>
+                Europaring 12, 40878 Ratingen
+            </div>
+        </section>
+
+        <section>
+            <h2>Verbraucherstreitbeilegung</h2>
+            <p>
+                Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren
+                vor einer Verbraucherschlichtungsstelle teilzunehmen (§ 36 VSBG).
+            </p>
+            <p style="font-size:0.94rem; color:var(--text-tertiary);">
+                Hinweis: Ein Verweis auf die Online-Streitbeilegungsplattform der EU ist hier
+                bewusst nicht enthalten. Die Plattform wurde zum 20. Juli 2025 eingestellt;
+                ein Link darauf wäre heute falsch.
+            </p>
+        </section>
+
+        <section>
+            <h2>Haftung für Inhalte</h2>
+            <p>
+                Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen
+                Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir
+                als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde
+                Informationen zu überwachen oder nach Umständen zu forschen, die auf eine
+                rechtswidrige Tätigkeit hinweisen.
+            </p>
+            <p>
+                Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den
+                allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist
+                jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich.
+                Bei Bekanntwerden entsprechender Rechtsverletzungen entfernen wir diese Inhalte
+                umgehend.
+            </p>
+        </section>
+
+        <section>
+            <h2>Haftung für Links</h2>
+            <p>
+                Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir
+                keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine
+                Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige
+                Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum
+                Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft; rechtswidrige
+                Inhalte waren zu diesem Zeitpunkt nicht erkennbar.
+            </p>
+            <p>
+                Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist ohne konkrete
+                Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von
+                Rechtsverletzungen entfernen wir derartige Links umgehend.
+            </p>
+        </section>
+
+        <section>
+            <h2>Urheberrecht</h2>
+            <p>
+                Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten
+                unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung,
+                Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts
+                bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+                Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen
+                Gebrauch gestattet.
+            </p>
+            <p>
+                Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die
+                Urheberrechte Dritter beachtet. Sollten Sie dennoch auf eine Urheberrechtsverletzung
+                aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von
+                Rechtsverletzungen entfernen wir solche Inhalte umgehend.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <span>© 2026 witting.info</span>
+        <nav>
+            <a href="https://witting.info">Startseite</a>
+            <a href="/datenschutz/">Datenschutz</a>
+            <a href="mailto:kontakt@witting.info">kontakt@witting.info</a>
+        </nav>
+    </footer>
+</div>
+</body>
+</html>
