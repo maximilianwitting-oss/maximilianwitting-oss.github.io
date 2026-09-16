@@ -3,10 +3,13 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const $ = s => document.querySelector(s);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-let paused = reduced.matches, opened = false, progress = 0, target = 0, ready = false;
+let paused = reduced.matches, opened = false, progress = 0, target = 0, ready = false, replaying = false, viewProgress = 0;
 const stage = $('#stage'), status = $('#load-status');
+let stageWidth=stage.clientWidth, stageHeight=stage.clientHeight, stageVisible=true;
+new ResizeObserver(([entry])=>{stageWidth=entry.contentRect.width;stageHeight=entry.contentRect.height;}).observe(stage);
+new IntersectionObserver(([entry])=>{stageVisible=entry.isIntersecting;}).observe(stage);
 const motion = $('#motion');
-function setMotion() { motion.textContent = paused ? 'Animation fortsetzen' : 'Animation pausieren'; motion.setAttribute('aria-pressed', String(paused)); }
+function setMotion() { motion.textContent = paused ? 'Animation fortsetzen' : 'Animation pausieren'; motion.setAttribute('aria-pressed', String(paused)); $('#replay').disabled = paused; }
 setMotion();
 motion.addEventListener('click', () => { paused = !paused; setMotion(); });
 reduced.addEventListener('change', e => { paused = e.matches; setMotion(); });
@@ -14,12 +17,13 @@ function reveal() {
   opened = true; target = 1; document.body.classList.add('opened');
   $('#open').setAttribute('aria-expanded', 'true');
   $('#intro').inert = true; $('#intro').setAttribute('aria-hidden','true');
+  $('#story').hidden = false;
   $('#gift').inert = false; $('#gift').setAttribute('aria-hidden', 'false');
   $('#replay').focus({preventScroll:true});
   if (paused) progress = 1;
 }
 $('#open').addEventListener('click', reveal);
-$('#replay').addEventListener('click', () => { progress = 0; target = 1; if (paused) { progress = 1; } });
+$('#replay').addEventListener('click', () => { if (paused) return; target = 0; replaying = true; });
 
 // A gentle particle sky: bounded particles, no full-screen flashes, no audio.
 const sky = $('#fireworks'), ctx = sky.getContext('2d');
@@ -41,8 +45,8 @@ function drawSky(dt, time) {
  particles=particles.filter(p=>p.life>0);ctx.globalAlpha=1;
 }
 
-let renderer, scene, camera, model, temple, cards=[], parts=[], userAngle=0, dragStart=null;
-const smooth = x => { x=THREE.MathUtils.clamp(x,0,1);return x*x*(3-2*x); };
+let renderer, scene, camera, model, temple, cards=[], parts=[], userAngle=0, renderedAngle=0, dragStart=null;
+const smooth = x => { x=THREE.MathUtils.clamp(x,0,1);return x*x*x*(x*(x*6-15)+10); };
 function cardTexture(i) {
  const c=document.createElement('canvas');c.width=256;c.height=320;const x=c.getContext('2d');
  x.fillStyle='#f6ead7';x.fillRect(0,0,256,320);
@@ -64,8 +68,8 @@ function fallback(error) {
 }
 async function init() {
  try {
- renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'low-power'});
- renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.setClearColor(0x000000,0);
+ renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
+ renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setClearColor(0x000000,0);
  renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
  stage.append(renderer.domElement);
  renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();fallback('WebGL context lost');});
@@ -82,7 +86,7 @@ async function init() {
  centers.forEach(([x,z],i)=>{
   const g=new THREE.Group();const body=new THREE.Mesh(new THREE.BoxGeometry(.90,.073,1.08),new THREE.MeshStandardMaterial({color:0xe9dfcd,roughness:.4}));g.add(body);
   const face=new THREE.Mesh(new THREE.PlaneGeometry(.87,1.05),new THREE.MeshStandardMaterial({map:cardTexture(i),roughness:.58}));face.rotation.x=-Math.PI/2;face.position.y=.038;g.add(face);
-  g.userData.start=new THREE.Vector3(x*.018,.105,-z*.018);g.position.copy(g.userData.start);model.add(g);cards.push(g);
+  g.userData.start=new THREE.Vector3(x*.018,.105,-z*.018);g.position.copy(g.userData.start);g.userData.end=new THREE.Vector3((i-2)*.86,.84+(.12*(2-Math.abs(i-2))),1.22+(.18*(2-Math.abs(i-2))));model.add(g);cards.push(g);
  });
  ready=true;status.textContent='';
  stage.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'||opened){dragStart={x:e.clientX,angle:userAngle};stage.setPointerCapture(e.pointerId);}});
@@ -97,20 +101,29 @@ function frame(now){
  if(document.hidden)return;
  if(!paused)elapsed+=dt;
  drawSky(dt,elapsed);
- if(!ready)return;
- if(!paused)progress=Math.min(target,progress+dt*.24);
+ if(!ready||!stageVisible)return;
+ if(!paused){
+  const delta=target-progress;
+  progress+=Math.sign(delta)*Math.min(Math.abs(delta),dt*.22);
+  if(replaying&&progress<=0){target=1;replaying=false;}
+ }
+ viewProgress=paused&&opened?1:Math.min(opened?1:0,viewProgress+dt*.55);
  
  const p=smooth(progress);
  for(const mesh of parts){const name=mesh.name;let lift=0;if(name.startsWith('04_'))lift=2.8*smooth(progress*1.9);else if(name.startsWith('03_'))lift=1.85*smooth((progress-.12)*1.7);else if(name.startsWith('02_'))lift=1.28*smooth((progress-.24)*1.7);mesh.position.y=mesh.userData.base.y+lift;}
- cards.forEach((c,i)=>{const f=smooth((progress-.37-i*.035)*2.6);c.position.copy(c.userData.start).lerp(new THREE.Vector3((i-2)*.86,.84+(.12*(2-Math.abs(i-2))),1.22+(.18*(2-Math.abs(i-2)))),f);c.rotation.x=f*.92;c.rotation.z=(i-2)*-.065*f;});
- model.rotation.y=userAngle+.22+(.14*(1-p))+(paused?0:Math.sin(elapsed*.21)*.065);
- model.position.y=paused?0:Math.sin(elapsed*.7)*.028;
- const w=stage.clientWidth,h=stage.clientHeight;
- if(renderer.domElement.width!==Math.round(w*renderer.getPixelRatio())||renderer.domElement.height!==Math.round(h*renderer.getPixelRatio()))renderer.setSize(w,h,false);
+ cards.forEach((c,i)=>{const f=smooth((progress-.37-i*.035)*2.6);c.position.copy(c.userData.start).lerp(c.userData.end,f);c.rotation.x=f*.92;c.rotation.z=(i-2)*-.065*f;});
+ renderedAngle+=(userAngle-renderedAngle)*(1-Math.exp(-dt*12));
+ model.rotation.y=renderedAngle+.22+(.14*(1-p))+Math.sin(elapsed*.21)*.065;
+ model.position.y=Math.sin(elapsed*.7)*.028;
+ const w=stageWidth,h=stageHeight;
+ if(!w||!h)return;
+ if(renderer.domElement.width!==Math.floor(w*renderer.getPixelRatio())||renderer.domElement.height!==Math.floor(h*renderer.getPixelRatio()))renderer.setSize(w,h,false);
  camera.aspect=w/h;
- const vertical=opened?6.6:3.8;
+ const v=smooth(viewProgress),mobile=w<=700;
+ const vertical=THREE.MathUtils.lerp(mobile?8.7:5.8,mobile?12.8:12.2,v);
  const distance=Math.max(vertical,4.9/camera.aspect)/(2*Math.tan(THREE.MathUtils.degToRad(camera.fov/2)));
- const look=opened?2.55:1.08;
+ const look=THREE.MathUtils.lerp(1.08,2.55,v);
+ camera.setViewOffset(w,h,-w*(mobile?.08:.20)*(1-v),-h*THREE.MathUtils.lerp(mobile?.22:.035,.005,v),w,h);
  camera.position.set(0,look+distance*.28,distance);camera.lookAt(0,look,0);camera.updateProjectionMatrix();renderer.render(scene,camera);
 }
 requestAnimationFrame(frame);

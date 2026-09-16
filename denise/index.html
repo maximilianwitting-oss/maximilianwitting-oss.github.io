@@ -6,9 +6,9 @@
 <meta name="description" content="Alles Liebe zum Geburtstag, liebe Denise. Eine kleine Reise nach Japan – von Sven, Sommy und Max.">
 <meta name="theme-color" content="#0a101b"><meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230a101b'/%3E%3Ccircle cx='32' cy='32' r='21' fill='%23ba3945'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Georgia' font-size='27' fill='%23fff0d8'%3E42%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./style.css?v=2">
 <script type="importmap">{"imports":{"three":"./vendor/build/three.module.js","three/addons/":"./vendor/examples/jsm/"}}</script>
-<script type="module" src="./app.js"></script>
+<script type="module" src="./app.js?v=2"></script>
 </head>
 <body>
 <canvas id="fireworks" aria-hidden="true"></canvas>
@@ -24,10 +24,20 @@
 <div id="stage" role="img" aria-label="Dein japanischer Tempel als drehbares 3D-Modell"><img id="fallback" src="./assets/temple-fallback.png" alt="Dein Tempel mit angehobenem Dach, Tempelhalle und Sockeldeckel" hidden></div>
 <section id="gift" class="gift" aria-hidden="true" inert>
 <div class="wish"><p class="eyebrow">EIN GESCHENK. FÜNF SONGS. DEIN ABENTEUER.</p><h2>Alles Liebe zum Geburtstag,<br><em>liebe Denise!</em></h2></div>
-<div class="gift-bottom"><p class="senders">wünschen dir <strong>Sven, Sommy &amp; Max</strong></p><p class="travel">Fünf Songs für deine Reise. Ein Stück Japan für zuhause.</p><div class="actions"><button id="replay">Noch einmal öffnen <span aria-hidden="true">↺</span></button><span id="drag-hint">Ziehen, um den Tempel zu drehen</span></div></div>
+<div class="gift-bottom"><p class="senders">wünschen dir <strong>Sven, Sommy &amp; Max</strong></p><p class="travel">Fünf Songs für deine Reise. Ein Stück Japan für zuhause.</p><div class="actions"><button id="replay">Noch einmal öffnen <span aria-hidden="true">↺</span></button><span id="drag-hint">Ziehen, um den Tempel zu drehen</span></div><a class="discover" href="#story">Was in deinem Geschenk steckt <span aria-hidden="true">↓</span></a></div>
 </section>
 <p id="load-status" role="status">Dein Geschenk wird vorbereitet …</p>
 </main>
+<div id="story" class="story" hidden>
+<section class="gift-story" aria-labelledby="story-title">
+<div class="chapter"><span>01 / DEIN GESCHENK</span><span aria-hidden="true">音楽 · MUSIK</span></div>
+<div class="story-grid"><div><p class="eyebrow">EIN KLEINER TEMPEL. GANZ VIEL DRIN.</p><h2 id="story-title">Ein Stück Japan.<br><em>Und dein eigener Soundtrack.</em></h2></div>
+<div class="story-copy"><p>Dieser kleine japanische Tempel ist für dich entstanden – Schicht für Schicht im 3D-Druck. Als Vorfreude auf deine Reise und als Erinnerung, die danach bei dir bleibt.</p><p>Im Sockel warten fünf Songkarten auf dich. In jeder steckt ein NFC-Sticker, der einen Song in Apple Music öffnet, wenn du ihn mit deinem iPhone scannst. Fünf kleine musikalische Begleiter für unterwegs. Oder für einen Moment Japan zuhause.</p></div></div>
+<ol class="steps"><li><span class="step-number">01</span><h3>Eine Karte aussuchen</h3><p>Hebe den Tempel samt Deckel vom Sockel und nimm eine der fünf Songkarten heraus.</p></li><li><span class="step-number">02</span><h3>Dein iPhone daranhalten</h3><p>Aktiviere den Bildschirm und halte die obere Kante deines iPhones nah an den NFC-Sticker der Karte.</p></li><li><span class="step-number">03</span><h3>Antippen. Zuhören. Losreisen.</h3><p>Tippe auf die eingeblendete Mitteilung. Sie führt dich zum Song in Apple Music – dort kannst du ihn abspielen.</p></li></ol>
+<p class="small-note">Die Songkarten gehören zum gedruckten Geschenk. Zum vollständigen Anhören kann ein Apple-Music-Abonnement erforderlich sein.</p>
+</section>
+<section class="thanks" aria-labelledby="thanks-title"><div class="chapter"><span>02 / WAS WIR DIR SAGEN MÖCHTEN</span><span aria-hidden="true">ありがとう · DANKE</span></div><p class="eyebrow">LIEBE DENISE,</p><h2 id="thanks-title">Wie schön,<br><em>dass es dich gibt.</em></h2><div class="letter"><p>Du bist da, wenn man dich braucht. Du hörst zu, packst mit an und hilfst oft schon, bevor jemand überhaupt fragen muss. Ganz selbstverständlich, ohne viel Aufhebens darum zu machen. Deine Hilfsbereitschaft und deine selbstlose Art bedeuten uns unglaublich viel.</p><p>Und dann ist da dein Humor: die kleinen Kommentare, das gemeinsame Lachen und diese Fähigkeit, selbst einen ganz gewöhnlichen Tag schöner zu machen. Mit deiner offenen, unheimlich sympathischen Art fühlt man sich bei dir einfach wohl.</p><p>Danke für all die schönen Momente mit dir. Für die Gespräche, das Lachen und die Zeit, die du uns schenkst. Danke fürs Immer-da-Sein. Und dafür, dass du einfach du bist.</p><p>Für dein neues Lebensjahr wünschen wir dir viele Momente, die genauso schön sind wie die, die du anderen bereitest. Eine wundervolle Japanreise, neue Lieblingsorte – und noch ganz viele gemeinsame Geschichten.</p></div><p class="closing">Auf dich, auf 42 und auf alles, was noch kommt.</p><p class="signature">Sven, Sommy &amp; Max</p><a class="back-top" href="#experience">Noch ein Blick auf dein Geschenk ↑</a></section>
+</div>
 <footer><span>MIT GUTEN FREUNDEN BEGINNEN DIE BESTEN GESCHICHTEN.</span><span aria-hidden="true">日本 · 42</span></footer>
 <noscript><div class="no-script">Alles Liebe zum Geburtstag, liebe Denise! Wünschen dir Sven, Sommy und Max.<br>Aktiviere JavaScript, um deinen Tempel zu öffnen.</div></noscript>
 </body></html>
